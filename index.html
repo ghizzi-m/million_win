@@ -1,0 +1,3307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="artifact-type" content="tool">
+<meta name="design-style" content="neon_noir">
+<title>من يربح المليون - النسخة التعليمية - مهارات رقمية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #070b19;
+  --bg-card: rgba(13, 21, 39, 0.88);
+  --bg-card-hover: rgba(18, 30, 56, 0.95);
+  --primary-gold: #f5b700;
+  --primary-gold-light: #ffd700;
+  --primary-gold-dark: #c68a00;
+  --neon-cyan: #00e5ff;
+  --neon-blue: #2979ff;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --border-gold: rgba(245, 183, 0, 0.35);
+  --border-subtle: rgba(148, 163, 184, 0.2);
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --gold-gradient: linear-gradient(135deg, #ffe066 0%, #f5b700 50%, #c68a00 100%);
+  --gold-glow: 0 0 25px rgba(245, 183, 0, 0.45);
+  --cyan-glow: 0 0 20px rgba(0, 229, 255, 0.4);
+  --red-glow: 0 0 20px rgba(239, 68, 68, 0.5);
+  --green-glow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Background Atmospheric Glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(245, 183, 0, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(0, 229, 255, 0.06), transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(13, 21, 39, 0.6), transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Golden text styling */
+.title-gold {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.title-red-neon {
+  color: #ff4757;
+  text-shadow: 0 0 10px rgba(255, 71, 87, 0.7), 0 0 20px rgba(255, 71, 87, 0.5);
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.neon-cyan-text {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.65);
+  font-weight: 700;
+}
+
+/* ===============================
+   START SCREEN LAYOUT
+================================ */
+#start {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 24px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trophy-badge {
+  font-size: 72px;
+  margin-bottom: 4px;
+  animation: floatAnim 3.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(245, 183, 0, 0.5));
+}
+
+#start h1 {
+  font-size: clamp(34px, 5.5vw, 56px);
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .start-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 25px rgba(245, 183, 0, 0.04);
+}
+
+.panel-card h2, .panel-card h3 {
+  color: var(--primary-gold);
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sub-tagline {
+  color: var(--primary-gold);
+  font-size: 19px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.sub-meta {
+  color: var(--text-muted);
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Teacher Box */
+.teacher-inputs-box {
+  background: rgba(7, 11, 25, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 22px;
+}
+
+.teacher-inputs-box h4 {
+  color: var(--primary-gold-light);
+  font-size: 16px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(7, 11, 25, 0.85);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.input-field:focus {
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 12px rgba(245, 183, 0, 0.35);
+}
+
+.input-field::placeholder {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* Rules Section */
+.rules-container {
+  margin-top: 6px;
+}
+
+.rules-container h3 {
+  margin-bottom: 12px;
+}
+
+.rules-list {
+  list-style: none;
+}
+
+.rules-list li {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 10px 0;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.rules-list li::before {
+  content: "•";
+  color: var(--primary-gold);
+  font-size: 24px;
+  line-height: 1.4;
+}
+
+/* Level Toggle Buttons */
+.level-toggle-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.level-option {
+  flex: 1;
+  cursor: pointer;
+}
+
+.level-option input {
+  display: none;
+}
+
+.level-option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: rgba(7, 11, 25, 0.7);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.level-option input:checked + span {
+  border-color: var(--primary-gold);
+  color: var(--primary-gold);
+  background: rgba(245, 183, 0, 0.12);
+  box-shadow: 0 0 16px rgba(245, 183, 0, 0.25);
+}
+
+/* Units Accordion / Grid */
+.units-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.unit-card {
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  background: rgba(7, 11, 25, 0.6);
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+
+.unit-header-btn {
+  width: 100%;
+  padding: 14px 18px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-main);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s;
+  text-align: right;
+}
+
+.unit-header-btn:hover {
+  background: rgba(245, 183, 0, 0.08);
+}
+
+.unit-header-btn .arrow {
+  color: var(--primary-gold);
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.unit-card.open .unit-header-btn .arrow {
+  transform: rotate(180deg);
+}
+
+.lessons-list {
+  display: none;
+  padding: 10px 14px 16px;
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(4, 7, 18, 0.85);
+  flex-direction: column;
+  gap: 8px;
+}
+
+.unit-card.open .lessons-list {
+  display: flex;
+}
+
+.lesson-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(245, 183, 0, 0.15) 0%, rgba(245, 183, 0, 0.05) 100%);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s ease;
+  text-align: right;
+}
+
+.lesson-btn:hover {
+  background: var(--gold-gradient);
+  color: #070b19;
+  transform: translateX(-4px);
+  box-shadow: var(--gold-glow);
+}
+
+.lesson-badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: inherit;
+}
+
+/* Credits Box */
+.credits-box {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+}
+
+.social-btn:hover {
+  background: var(--neon-cyan);
+  color: #070b19;
+  transform: translateY(-2px);
+  box-shadow: var(--cyan-glow);
+}
+
+.social-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===============================
+   GAME SCREEN
+================================ */
+#game {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 16px 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Game Header Top Bar */
+.game-top-bar {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1.3fr;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .game-top-bar {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+.top-bar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.student-greeting {
+  font-size: 19px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.nav-actions-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.nav-btn-mini {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-btn-mini:hover {
+  background: rgba(245, 183, 0, 0.2);
+  border-color: var(--primary-gold);
+  color: var(--primary-gold-light);
+  transform: translateY(-1px);
+}
+
+.btn-danger-outline {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--danger);
+  color: #ff7675;
+}
+
+.btn-danger-outline:hover {
+  background: var(--danger) !important;
+  color: #fff !important;
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+}
+
+.top-bar-center {
+  text-align: center;
+}
+
+.top-bar-center h1 {
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .top-bar-left {
+    justify-content: center;
+  }
+}
+
+.lifelines-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lifelines-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-gold);
+  white-space: nowrap;
+}
+
+.lifeline-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 800;
+  background: rgba(240, 248, 255, 0.85);
+  color: #070b19;
+  cursor: pointer;
+  border: 2px solid #ffffff; 
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.lifeline-btn:hover:not(:disabled) {
+  background: var(--gold-gradient);
+  transform: scale(1.1);
+  box-shadow: var(--gold-glow);
+  border-color: var(--primary-gold);
+}
+
+.lifeline-btn:disabled {
+  opacity: 0.35;
+  filter: grayscale(1);
+  cursor: not-allowed;
+  border-color: var(--border-subtle);
+  background: rgba(200, 200, 200, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Timer */
+.timer-widget {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: conic-gradient(var(--primary-gold) var(--p, 100%), #1c2744 0);
+  transition: background 0.15s linear;
+  box-shadow: 0 0 15px rgba(245, 183, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.timer-widget.low {
+  background: conic-gradient(var(--danger) var(--p, 100%), #1c2744 0);
+  animation: pulseRed 0.6s infinite;
+  box-shadow: var(--red-glow);
+}
+
+.timer-inner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-main);
+}
+
+/* Lesson Title Ribbon */
+.lesson-ribbon {
+  background: rgba(13, 21, 39, 0.95);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 10px 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.lesson-ribbon-title {
+  color: var(--primary-gold);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.lesson-ribbon-unit {
+  background: rgba(245, 183, 0, 0.15);
+  border: 1px solid var(--border-gold);
+  color: var(--primary-gold-light);
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* Game Main Layout */
+.game-layout {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 950px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Question Box */
+.qbox-container {
+  background: linear-gradient(180deg, #1e2b4d 0%, #0f172a 100%);
+  border: 2px solid var(--primary-gold);
+  border-radius: 20px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: var(--gold-glow), inset 0 0 40px rgba(0, 0, 0, 0.5);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.qbox-meta {
+  color: var(--neon-cyan);
+  font-size: 18px; 
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 8px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.qbox-text {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text-main);
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Answers Grid */
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.answers-grid.two-options {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 680px) {
+  .answers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ans-btn {
+  font-family: inherit;
+  color: var(--text-main);
+  font-size: 18px;
+  font-weight: 700;
+  padding: 16px 28px;
+  cursor: pointer;
+  text-align: right;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #18223c 0%, #0d1527 100%);
+  border: 2px solid var(--border-gold);
+  transition: all 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.ans-btn .letter-badge {
+  color: var(--primary-gold);
+  font-weight: 900;
+  margin-left: 12px;
+  font-size: 20px;
+  min-width: 28px;
+  display: inline-block;
+}
+
+.ans-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #24335a 0%, #16223e 100%);
+  border-color: var(--primary-gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 183, 0, 0.25);
+}
+
+.ans-btn:disabled {
+  cursor: not-allowed;
+}
+
+.ans-btn.selected {
+  background: linear-gradient(180deg, #d97706 0%, #b45309 100%) !important;
+  border-color: #fbbf24 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.7) !important;
+}
+
+.ans-btn.correct {
+  background: linear-gradient(180deg, #059669 0%, #047857 100%) !important;
+  border-color: #34d399 !important;
+  color: #ffffff !important;
+  box-shadow: var(--green-glow) !important;
+  animation: pulseGreen 0.6s infinite;
+}
+
+.ans-btn.wrong {
+  background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%) !important;
+  border-color: #f87171 !important;
+  color: #ffffff !important;
+  box-shadow: var(--red-glow) !important;
+  animation: shake 0.5s ease-in-out;
+}
+
+.ans-btn.gone {
+  opacity: 0.15 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Bomb effect explosion overlay */
+.bomb-smoke {
+  animation: explodeOut 0.7s forwards ease-out;
+}
+
+/* Prize Ladder */
+.ladder-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+}
+
+.ladder-card h3 {
+  color: var(--primary-gold);
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 8px;
+}
+
+.ladder-list {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 5px;
+  list-style: none;
+}
+
+.ladder-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.25s;
+  border: 1px solid transparent;
+}
+
+.ladder-step.ms {
+  border-color: var(--primary-gold);
+  color: var(--primary-gold-light);
+  background: rgba(245, 183, 0, 0.08);
+}
+
+.ladder-step.ms::after {
+  content: "★ محطة آمنة";
+  font-size: 10px;
+  color: var(--primary-gold);
+  margin-right: 6px;
+}
+
+.ladder-step.passed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.ladder-step.cur {
+  background: var(--gold-gradient);
+  color: #070b19;
+  box-shadow: var(--gold-glow);
+  transform: scale(1.04);
+  font-weight: 900;
+}
+
+/* ===============================
+   MODALS AND DIALOGS
+================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 18, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: 2px solid var(--primary-gold);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 620px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--gold-glow), 0 10px 40px rgba(0, 0, 0, 0.7);
+  position: relative;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-icon {
+  font-size: 64px;
+  margin-bottom: 12px;
+}
+
+.modal-title {
+  color: var(--primary-gold);
+  font-size: 26px;
+  margin-bottom: 12px;
+}
+
+.modal-text {
+  color: var(--text-muted);
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+/* Audience Poll Chart */
+.bars-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 190px;
+  margin: 20px 0 24px;
+  background: rgba(7, 11, 25, 0.6);
+  border-radius: 12px;
+  padding: 16px 8px 10px;
+}
+
+.bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  width: 50px;
+}
+
+.bar-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.bar-fill {
+  width: 100%;
+  background: var(--gold-gradient);
+  border-radius: 6px 6px 0 0;
+  transition: height 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 10px rgba(245, 183, 0, 0.4);
+}
+
+.bar-label {
+  color: var(--primary-gold);
+  font-weight: 800;
+  margin-top: 8px;
+  font-size: 16px;
+}
+
+/* Interactive Action Buttons */
+.actions-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn-action {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  background: var(--gold-gradient);
+  color: #070b19;
+  box-shadow: 0 4px 15px rgba(245, 183, 0, 0.35);
+}
+
+.btn-gold:hover {
+  box-shadow: var(--gold-glow);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+}
+
+.btn-success:hover {
+  box-shadow: var(--green-glow);
+}
+
+.btn-print {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.35);
+}
+
+.btn-print:hover {
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--text-muted);
+}
+
+/* ===============================
+   CERTIFICATE SHEET DESIGN
+================================ */
+#printableCertificate {
+  display: none; 
+}
+
+/* When viewing in modal preview */
+.cert-preview-card {
+  background: #fffdf9;
+  color: #0c182a;
+  border: 4px double #b8860b;
+  border-radius: 14px;
+  padding: 24px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.cert-preview-card * {
+  color: #0c182a;
+}
+
+.cert-header-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #b8860b;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.cert-header-right {
+  text-align: right;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.cert-header-center {
+  text-align: center;
+}
+
+.cert-header-center .emblem {
+  font-size: 38px;
+  margin-bottom: 2px;
+}
+
+.cert-header-center h2 {
+  font-size: 24px;
+  color: #92400e;
+  font-weight: 900;
+}
+
+.cert-header-left {
+  text-align: left;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.cert-body {
+  margin: 16px 0;
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cert-recipient-intro {
+  font-size: 17px;
+  color: #475569;
+}
+
+.cert-student-name {
+  font-size: 32px;
+  font-weight: 900;
+  color: #92400e;
+  margin: 10px 0;
+  padding: 6px 16px;
+  border-bottom: 2px dashed #b8860b;
+  display: inline-block;
+}
+
+.cert-class-tag {
+  font-size: 17px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.cert-details-text {
+  font-size: 17px;
+  color: #1e293b;
+  margin-bottom: 16px;
+}
+
+/* Cumulative lessons completed table inside certificate */
+.cert-lessons-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.cert-lessons-table th, .cert-lessons-table td {
+  border: 1px solid #cbd5e1;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.cert-lessons-table th {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 800;
+}
+
+.cert-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.cert-signature-box {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cert-stamp {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px dashed #b8860b;
+  margin: 4px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #b8860b;
+  font-weight: 800;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ===============================
+   KEYFRAME ANIMATIONS
+================================ */
+@keyframes floatAnim {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+  50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.9); }
+}
+
+@keyframes pulseGreen {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes explodeOut {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15) rotate(4deg); opacity: 0.8; filter: brightness(2); }
+  100% { transform: scale(0.9); opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================
+   PERFECT PRINT MEDIA QUERIES (Multi-page Fix)
+========================================= */
+@page {
+  size: A4 portrait;
+  margin: 20mm 15mm;
+}
+
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  body::before,
+  #start,
+  #game,
+  .modal-overlay:not(#certModal),
+  .no-print,
+  button,
+  .btn-action,
+  .social-links,
+  .tools,
+  .ladder-card,
+  header,
+  .nav-actions-row
+  {
+    display: none !important;
+  }
+
+  #printableCertificate {
+    display: block !important; 
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  .cert-inner-wrapper {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    border: 4px solid #b8860b !important;
+    padding: 40px 30px !important;
+    background: #fffdf9 !important;
+    height: auto !important;
+    min-height: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  .cert-header-grid {
+    display: flex !important;
+    justify-content: space-between !important;
+    border-bottom: 2px solid #b8860b !important;
+    padding-bottom: 15px !important; 
+    margin-bottom: 30px !important; 
+    page-break-inside: avoid !important;
+  }
+
+  .cert-body {
+    display: block !important;
+    text-align: center !important;
+  }
+
+  #printableCertificate * {
+    visibility: visible !important;
+    color: #0c182a !important;
+  }
+
+  .cert-header-right, .cert-header-left {
+    font-size: 17px !important;
+  }
+
+  .cert-main-title {
+    font-size: 28px !important;
+  }
+  
+  .cert-recipient-intro {
+    font-size: 19px !important;
+  }
+
+  .cert-student-name {
+    color: #78350f !important;
+    border-bottom: 2px dashed #b8860b !important;
+    font-size: 40px !important;
+    margin: 10px 0 !important;
+  }
+
+  .cert-class-tag, .cert-details-text {
+    font-size: 19px !important;
+  }
+
+  .cert-lessons-table {
+    margin: 30px auto !important;
+    width: 100% !important;
+    font-size: 16px !important;
+    page-break-inside: auto !important;
+    border-collapse: collapse !important;
+  }
+
+  .cert-lessons-table tr {
+    page-break-inside: avoid !important;
+    page-break-after: auto !important;
+  }
+
+  .cert-lessons-table thead {
+    display: table-header-group !important;
+  }
+
+  .cert-lessons-table th {
+    background-color: #fef3c7 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 17px !important;
+  }
+
+  .cert-footer-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    margin-top: 40px !important;
+    page-break-inside: avoid !important;
+  }
+  
+  .cert-signature-box {
+    font-size: 18px !important;
+  }
+
+  .cert-stamp {
+    width: 120px !important;
+    height: 120px !important;
+    font-size: 16px !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Exit button exclusively on start screen -->
+<div id="startExitBtn" style="position: absolute; top: 16px; left: 16px; z-index: 10;">
+  <button class="nav-btn-mini btn-danger-outline" style="padding: 8px 16px; font-size: 14px;" onclick="exitApplication()" title="خروج من اللعبة">🚪 خروج</button>
+</div>
+
+<!-- ===============================
+     START SCREEN
+================================ -->
+<section id="start">
+  <div class="trophy-badge">🏆</div>
+  <h1 class="title-gold">من يربح المليون</h1>
+
+  <div class="start-grid">
+    <!-- RIGHT PANEL: Rules, Titles & Teacher Inputs -->
+    <div class="panel-card">
+      <p class="sub-tagline">مراجعة دروس مادة المهارات الرقمية</p>
+      <p class="sub-meta">الصف السادس - الفصل الأول</p>
+
+      <!-- Teacher Info Inputs -->
+      <div class="teacher-inputs-box">
+        <h4>بيانات المعلم</h4>
+        <input type="text" id="teacherName" placeholder="اسم المعلم / المعلمة" class="input-field">
+        <input type="text" id="teacherCity" placeholder="إدارة التعليم في مدينة (مثال: الرياض)" class="input-field">
+        <input type="text" id="teacherSchool" placeholder="اسم المدرسة (مثال: النموذجية الابتدائية)" class="input-field">
+      </div>
+
+      <!-- Rules List -->
+      <div class="rules-container">
+        <h3>قواعد اللعبة</h3>
+        <ul class="rules-list">
+          <li>اختر الوحدة والدرس الذي ترغب بمراجعته من القائمة.</li>
+          <li>30 ثانية للإجابة على كل سؤال (في المستوى المتقدم).</li>
+          <li>5 وسائل مساعدة: 50:50، اتصال بصديق، استطلاع الجمهور، إيقاف المؤقت، وفزعة 💣.</li>
+          <li>المحطات الآمنة: السؤال 5 والسؤال 10 والسؤال 15.</li>
+          <li>يفضل اللعب بوضع ملء الشاشة ، اضغط F11 لتكبير العرض في المتصفح.</li>
+          <li>تستطيع طباعة شهادتك المعتمدة عند نهاية كل درس أو وحدة تجتازها بنجاح.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- LEFT PANEL: Student Info, Level & Units Picker -->
+    <div class="panel-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h3 style="margin-bottom:0;">بيانات الطالب واختيار الدرس</h3>
+        <button class="nav-btn-mini btn-outline" style="border-color: var(--danger); color: var(--danger); font-size:13px; padding:6px 10px;" onclick="resetPlayer()" title="مسح بيانات الطالب الحالي للبدء من جديد">🔄 لاعب جديد</button>
+      </div>
+      <input type="text" id="studentName" placeholder="اكتب اسمك الثلاثي" class="input-field">
+      <input type="text" id="studentClass" placeholder="الصف الدراسي (مثال: سادس / 1)" class="input-field">
+
+      <!-- Level Selection -->
+      <div class="level-toggle-group">
+        <label class="level-option">
+          <input type="radio" name="gameLevel" value="beginner" onchange="setLevel('beginner')">
+          <span>🌱 مبتدئ (بدون مؤقت)</span>
+        </label>
+        <label class="level-option">
+          <input type="radio" name="gameLevel" value="advanced" checked onchange="setLevel('advanced')">
+          <span>⚡ متقدم (بمؤقت 30ث)</span>
+        </label>
+      </div>
+
+      <!-- Units & Lessons Selection Accordion -->
+      <div class="units-container">
+        <!-- Unit 1 -->
+        <div class="unit-card open" id="unitCard1">
+          <button class="unit-header-btn" onclick="toggleUnitAccordion(1)">
+            <span>📁 الوحدة الأولى: التصميم ثلاثي الأبعاد</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="lessons-list">
+            <button class="lesson-btn" onclick="selectLesson('1.1')">
+              <span>📖 الدرس 1: المقدمة إلى النمذجة ثلاثية الأبعاد</span>
+              <span class="lesson-badge">10 أسئلة</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('1.2')">
+              <span>📖 الدرس 2: معالجة الأشكال ثلاثية الأبعاد</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 2 -->
+        <div class="unit-card" id="unitCard2">
+          <button class="unit-header-btn" onclick="toggleUnitAccordion(2)">
+            <span>📁 الوحدة الثانية: جداول البيانات</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="lessons-list">
+            <button class="lesson-btn" onclick="selectLesson('2.1')">
+              <span>📖 الدرس 1: جداول البيانات والصيغ الحسابية</span>
+              <span class="lesson-badge">10 أسئلة</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('2.2')">
+              <span>📖 الدرس 2: المخططات البيانية وتنسيق الجداول</span>
+              <span class="lesson-badge">10 أسئلة</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 3 -->
+        <div class="unit-card" id="unitCard3">
+          <button class="unit-header-btn" onclick="toggleUnitAccordion(3)">
+            <span>📁 الوحدة الثالثة: قواعد البيانات</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="lessons-list">
+            <button class="lesson-btn" onclick="selectLesson('3.1')">
+              <span>📖 الدرس 1: مقدمة عن قواعد البيانات</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('3.2')">
+              <span>📖 الدرس 2: إنشاء قاعدة بيانات</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('3.3')">
+              <span>📖 الدرس 3: الفرز والتصفية</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Unit 4 -->
+        <div class="unit-card" id="unitCard4">
+          <button class="unit-header-btn" onclick="toggleUnitAccordion(4)">
+            <span>📁 الوحدة الرابعة: البرمجة باستخدام سكراتش</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="lessons-list">
+            <button class="lesson-btn" onclick="selectLesson('4.1')">
+              <span>📖 الدرس 1: التكرار في سكراتش</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('4.2')">
+              <span>📖 الدرس 2: برمجة العمليات الحسابية</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('4.3')">
+              <span>📖 الدرس 3: اتخاذ القرارات</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('4.4')">
+              <span>📖 الدرس 4: الإحداثيات في سكراتش</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('4.5')">
+              <span>📖 الدرس 5: القرارات المركبة في سكراتش</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+            <button class="lesson-btn" onclick="selectLesson('4.6')">
+              <span>📖 الدرس 6: الألعاب في سكراتش</span>
+              <span class="lesson-badge">15 سؤالاً</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preview Certificate Button (if student already completed any lesson) -->
+      <div id="prevCertBox" class="hidden" style="margin-top: 14px; text-align: center;">
+        <button class="btn-action btn-print" style="width: 100%; justify-content: center;" onclick="showSavedCertificate()">
+          🖨️ عرض وطباعة شهادة إنجازاتي السابقة
+        </button>
+      </div>
+
+      <!-- Credits Box -->
+      <div class="credits-box">
+        <div style="font-family: inherit; color: var(--neon-blue); text-shadow: 0 0 10px rgba(41, 121, 255, 0.7); margin-bottom: 12px; font-weight: 700; line-height: 1.4;">
+          <div style="font-size: 23px;">برمجة وتصميم: غزي بن مساعد الغزي</div>
+          <div style="font-size: 21px; opacity: 0.9;">الحقوق محفوظة</div>
+        </div>
+        <div class="social-links">
+          <a href="https://wa.me/966554455697" target="_blank" class="social-btn" title="واتساب">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          </a>
+          <a href="https://t.me/aboabdallah11" target="_blank" class="social-btn" title="تليجرام">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </a>
+          <a href="mailto:alghazee@hotmail.com" class="social-btn" title="البريد الإلكتروني">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </a>
+          <a href="https://salla.sa/digi_learn" target="_blank" class="social-btn" title="المتجر">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================
+     GAMEPLAY SCREEN
+================================ -->
+<section id="game" class="hidden">
+  <!-- Top Navigation & Control Bar -->
+  <header class="game-top-bar">
+    <!-- Right side: Student Welcome & Navigation Controls -->
+    <div class="top-bar-right">
+      <div class="student-greeting">
+        <span id="greetingPrefix">مرحباً بمبرمج المستقبل:</span>
+        <span id="gameStudentName" class="neon-cyan-text">طالب المستقبل</span>
+      </div>
+      <div class="nav-actions-row">
+        <button class="nav-btn-mini btn-danger-outline" onclick="exitApplication()" title="خروج من اللعبة">🚪 خروج</button>
+        <button class="nav-btn-mini" onclick="confirmExitGame()" title="العودة لقائمة الدروس">🏠 القائمة</button>
+        <button class="nav-btn-mini" onclick="confirmRestartLesson()" title="إعادة محاولة هذا الدرس">🔄 إعادة</button>
+        <button class="nav-btn-mini" id="soundToggleBtn" onclick="toggleSound()" title="كتم أو تشغيل المؤثرات الصوتية">🔊 الصوت</button>
+        <button class="nav-btn-mini" onclick="toggleFullscreen()" title="وضع ملء الشاشة (F11)">⛶ ملء الشاشة</button>
+      </div>
+    </div>
+
+    <!-- Center: Game Title (Neon Red) -->
+    <div class="top-bar-center">
+      <h1 class="title-red-neon">من يربح المليون</h1>
+    </div>
+
+    <!-- Left side: Lifelines & Timer -->
+    <div class="top-bar-left">
+      <div class="lifelines-wrapper">
+        <span class="lifelines-label">أزرار المساعدة</span>
+        <button class="lifeline-btn" id="l50" onclick="useFiftyFifty()" title="حذف إجابتين (50:50)" disabled>50:50</button>
+        <button class="lifeline-btn" id="lph" onclick="usePhoneAFriend()" title="اتصال بصديق" disabled>📞</button>
+        <button class="lifeline-btn" id="lau" onclick="useAudiencePoll()" title="استطلاع الجمهور" disabled>👥</button>
+        <button class="lifeline-btn" id="lstop" onclick="usePauseTimer()" title="إيقاف المؤقت لسؤال واحد" disabled>⏸️</button>
+        <button class="lifeline-btn" id="lbomb" onclick="useFazaaBomb()" title="فزعة: تفجير الإجابات الخاطئة واختيار الحل الصحيح" disabled>💣</button>
+      </div>
+
+      <!-- Conic Animated Timer (Hidden in beginner mode) -->
+      <div class="timer-widget" id="timerWidget">
+        <div class="timer-inner" id="timerNum">30</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Lesson Title Ribbon -->
+  <div class="lesson-ribbon">
+    <span class="lesson-ribbon-unit" id="ribbonUnitBadge">الوحدة الأولى</span>
+    <span class="lesson-ribbon-title" id="ribbonLessonTitle">الدرس الأول : المقدمة إلى النمذجة ثلاثية الأبعاد</span>
+  </div>
+
+  <!-- Game Main Area -->
+  <div class="game-layout">
+    <!-- Left: Question & Answers -->
+    <div>
+      <div class="qbox-container" id="qbox">
+        <div class="qbox-meta" id="qnumText">السؤال 1 من 10</div>
+        <div class="qbox-text" id="qtext">نص السؤال يظهر هنا...</div>
+      </div>
+      <div class="answers-grid" id="answersContainer">
+        <!-- Injected dynamically -->
+      </div>
+      <!-- حاوية زر الانتقال للمرحلة التالية تظهر أسفل الأسئلة بعد انتهاء الدرس -->
+      <div id="nextStageContainer" class="hidden" style="margin-top: 24px; display: flex; justify-content: center; width: 100%;">
+      </div>
+    </div>
+
+    <!-- Right: Prize Ladder -->
+    <div class="ladder-card">
+      <h3>سلم الجوائز والنقاط</h3>
+      <ul class="ladder-list" id="ladderList">
+        <!-- Injected dynamically -->
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===============================
+     MODAL DIALOG CONTAINER
+================================ -->
+<div class="modal-overlay hidden" id="gameModal" style="z-index: 9999;">
+  <div class="modal-content" id="modalBox">
+    <!-- Injected dynamically -->
+  </div>
+</div>
+
+<!-- ===============================
+     STANDALONE PRINTABLE CERTIFICATE
+     (Used for window.print() output)
+================================ -->
+<div id="printableCertificate">
+  <div class="cert-inner-wrapper">
+    <div class="cert-header-grid">
+      <div class="cert-header-right">
+        <div>المملكة العربية السعودية</div>
+        <div>وزارة التعليم</div>
+        <div id="printAdminCity">الإدارة العامة للتعليم</div>
+      </div>
+      <div class="cert-header-center">
+        <!-- Title left empty for print view to avoid overlapping/duplication -->
+      </div>
+      <div class="cert-header-left">
+        <div id="printSchoolName">مدرسة المهارات الرقمية</div>
+        <div>المادة: المهارات الرقمية</div>
+        <div id="printDate">التاريخ: 1448 هـ</div>
+      </div>
+    </div>
+
+    <div class="cert-body">
+      <div class="emblem" style="font-size: 38px; margin-bottom: 2px;">🏆</div>
+      <h2 class="cert-main-title">شهادة تفوق ونجاح</h2>
+      <div style="font-size: 15px; font-weight: 700; color: #475569; margin-bottom: 20px;">مسابقة من يربح المليون التعليمية</div>
+
+      <p class="cert-recipient-intro" id="printAwardIntro">
+        تَشْهَدُ إدارةُ المدرسةِ ومُعَلِّمُ المادةِ بأنّ:
+      </p>
+
+      <div class="cert-student-name" id="printStudentName">
+        اسم الطالب
+      </div>
+
+      <div class="cert-class-tag" id="printStudentClass">
+        الصف السادس الابتدائي
+      </div>
+
+      <p class="cert-details-text" id="printAwardBody">
+        قد اجتاز بتفوق وجدارة مراجعة المهارات الرقمية.
+      </p>
+
+      <!-- Cumulative Completed Lessons List -->
+      <div id="printLessonsTableWrapper" style="width: 100%;">
+        <!-- Injected if multiple lessons passed -->
+      </div>
+    </div>
+
+    <div class="cert-footer-grid">
+      <div class="cert-signature-box">
+        <div id="printTeacherTitle">معلم المادة:</div>
+        <div id="printTeacherName" style="color: #92400e; font-size: 18px; margin-top: 4px;">الاسم</div>
+      </div>
+      <div class="cert-signature-box">
+        <div class="cert-stamp">ختم التميز<br>1,000,000</div>
+      </div>
+      <div class="cert-signature-box">
+        <div id="printPrincipalTitle" style="color: #475569; font-size: 18px;">قائد المدرسة:</div>
+        <div style="min-height: 25px;"></div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   WHO WILL WIN THE MILLION - COMPLETE EDUCATIONAL SYSTEM
+   ===================================================================== */
+
+// Web Audio API Sound Synthesizer (Zero External Assets, 100% Reliable Offline)
+let audioCtx = null;
+let soundEnabled = true;
+
+function initAudio() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function playTickSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(900, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.04);
+  } catch(e){}
+}
+
+function playSelectSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(520, audioCtx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.12);
+  } catch(e){}
+}
+
+function playCorrectSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      const startTime = audioCtx.currentTime + idx * 0.09;
+      osc.frequency.setValueAtTime(freq, startTime);
+      gain.gain.setValueAtTime(0.15, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.35);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + 0.35);
+    });
+  } catch(e){}
+}
+
+// صوت الخطأ الاحترافي (Buzzer)
+function playWrongSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc1.type = 'square';
+    osc2.type = 'square';
+    
+    // نغمة تنافرية (Buzzer effect)
+    osc1.frequency.setValueAtTime(150, audioCtx.currentTime);
+    osc2.frequency.setValueAtTime(160, audioCtx.currentTime);
+    
+    // انخفاض التردد
+    osc1.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.5);
+    osc2.frequency.exponentialRampToValueAtTime(105, audioCtx.currentTime + 0.5);
+    
+    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+    
+    osc1.connect(gain);
+    osc2.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc1.start(); osc2.start();
+    osc1.stop(audioCtx.currentTime + 0.5); osc2.stop(audioCtx.currentTime + 0.5);
+  } catch(e){}
+}
+
+function playBombSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const bufferSize = audioCtx.sampleRate * 0.6;
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+    filter.frequency.linearRampToValueAtTime(80, audioCtx.currentTime + 0.5);
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    noise.start();
+    noise.stop(audioCtx.currentTime + 0.6);
+  } catch(e){}
+}
+
+function playFanfareSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+  try {
+    const chords = [
+      [523.25, 659.25, 783.99],          // C major
+      [587.33, 739.99, 880.00],          // D major
+      [659.25, 830.61, 987.77],          // E major
+      [783.99, 987.77, 1046.50, 1318.51] // C major triumphant octave
+    ];
+    chords.forEach((chord, step) => {
+      chord.forEach(freq => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        const start = audioCtx.currentTime + step * 0.24;
+        const dur = (step === chords.length - 1) ? 1.2 : 0.26;
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0.1, start);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(start);
+        osc.stop(start + dur);
+      });
+    });
+  } catch(e){}
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('soundToggleBtn');
+  if (btn) {
+    btn.textContent = soundEnabled ? '🔊 الصوت' : '🔇 مكتوم';
+    btn.style.color = soundEnabled ? 'var(--text-main)' : 'var(--danger)';
+  }
+  if (soundEnabled) {
+    playSelectSound();
+  }
+}
+
+/* =====================================================================
+   OFFICIAL QUESTION BANK (Strictly from Curriculum & User Excerpts)
+   ===================================================================== */
+const lessonBanks = {
+  // UNIT 1: 3D MODELING
+  '1.1': {
+    unitNumber: 'الوحدة الأولى',
+    unitTitle: 'التصميم ثلاثي الأبعاد',
+    lessonTitle: 'الدرس الأول : المقدمة إلى النمذجة ثلاثية الأبعاد',
+    nextLessonKey: '1.2',
+    questions: [
+      { q: `النمذجة ثنائية الأبعاد لها ثلاثة أبعاد طول وعرض وارتفاع.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `النمذجة ثلاثية الأبعاد لها بعدين اثنين هما الطول والعرض فقط.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `نستخدم برنامج تينكركاد لتصميم الأشكال ثلاثية الأبعاد.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `برنامج تينكركاد مجاني.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `مساحة العمل في تينكركاد :هي سطح مستوي لإنشاء الأشكال ومعالجتها.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تستخدم مقابض الأشكال في تينكركاد لتوسيع وتقليص الشكل وتدويره وإمالته.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يستخدم برنامج تينكركاد للتصميم ........ الأبعاد.`, a: [`المرآة`, `النسخ والمضاعفة`, `ثلاثي`, `تجميع`], c: 2 },
+      { q: `تستخدم أداة ........ في تينكركاد لإنشاء صورة معكوسة للشكل.`, a: [`المرآة`, `النسخ والمضاعفة`, `ثلاثي`, `تجميع`], c: 0 },
+      { q: `يسمح ........ الأشكال في تينكركاد بمعالجتها كوحدة واحدة.`, a: [`المرآة`, `النسخ والمضاعفة`, `ثلاثي`, `تجميع`], c: 3 },
+      { q: `تفيد أداة ........ في تينكركاد بإنشاء نسخ متعددة من الشكل بسرعة.`, a: [`المرآة`, `النسخ والمضاعفة`, `ثلاثي`, `تجميع`], c: 1 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9]
+  },
+  '1.2': {
+    unitNumber: 'الوحدة الأولى',
+    unitTitle: 'التصميم ثلاثي الأبعاد',
+    lessonTitle: 'الدرس الثاني : معالجة الأشكال ثلاثية الأبعاد',
+    nextLessonKey: '2.1',
+    questions: [
+      { q: `في برنامج تينكركاد نستطيع تغيير أبعاد الأشكال (الطول والعرض والارتفاع).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `في برنامج تينكركاد يوجد نوعين من الأشكال صلبة ومفرغة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `الشكل الصلب: هو شكل ثلاثي أبعاد مصمت تماما.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تستخدم الاشكال المفرغة لإنشاء تجاويف أو فراغات داخل جسم صلب.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لمحاذاة الأشكال في تينكركاد نستخدم أداة مضاعفة وتكرار Duplicate and repeat.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `في تينكركاد يمكن تغيير طريقة عرض الشكل ثلاثي الأبعاد بأداة فيوكيوب View Cube.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تُستخدم أداة المحاذاة (Align) في تينكركاد لترتيب شكلين أو أكثر أفقيًا أو رأسيًا.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `عملية دمج الأشكال البسيطة لإنشاء نماذج مركبة تُسمى التجميع (Group).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لتحديد عدة أشكال معًا لدمجها، يجب الضغط باستمرار على مفتاح Shift أثناء تحديد الأشكال.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يمكنك تغيير لون الشكل ثلاثي الأبعاد وجعله صلبًا من خلال لوحة الخصائص (Properties panel).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يُحدد الخيار ........ ما إذا كان الصندوق أو الشكل سيعمل كفجوة أو ثقب يتم اقتصاصه من جسم آخر.`, a: [`صلب`, `مفرغ`, `المحاذاة`, `تجميع`], c: 1 },
+      { q: `الجسم الـ ........ هو جسم ذو سطح مصمت ويشغل مساحة محددة يشبه الصخرة التي يمكنك حملها في يدك.`, a: [`صلب`, `مفرغ`, `المحاذاة`, `تجميع`], c: 0 },
+      { q: `لترتيب الصناديق والأسطوانات ووضعها في المنتصف بالنسبة لبعضها البعض، نستخدم أداة:`, a: [`الصلب`, `المفرغ`, `المحاذاة`, `التجميع`], c: 2 },
+      { q: `يُقصد بـ ........ دمج الأشكال معًا لإنشاء نماذج مركبة من أشكال بسيطة.`, a: [`صلب`, `مفرغ`, `المحاذاة`, `تجميع`], c: 3 },
+      { q: `في مساحة عمل تينكركاد، يُستخدم زر الفأرة ........ لتدوير الكاميرا ورؤية الأشكال من زوايا مختلفة.`, a: [`الأيسر`, `الأيمن`, `الأوسط`, `عجلة التمرير`], c: 1 }
+    ],
+    prizes: ["100", "200", "300", "500", "1,000", "2,000", "4,000", "8,000", "16,000", "32,000", "64,000", "125,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9, 14] 
+  },
+
+  // UNIT 2: SPREADSHEETS (EXCEL)
+  '2.1': {
+    unitNumber: 'الوحدة الثانية',
+    unitTitle: 'جداول البيانات',
+    lessonTitle: 'الدرس الأول : جداول البيانات والصيغ الحسابية',
+    nextLessonKey: '2.2',
+    questions: [
+      { q: `تتكون ورقة العمل في برنامج الجداول الحسابية من أعمدة وصفوف تتقاطع لتشكل الخلايا.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يجب أن تبدأ أي صيغة حسابية في برنامج إكسل بعلامة المساواة (=).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تُستخدم الدالة SUM لحساب المتوسط الحسابي لمجموعة من الأرقام.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `تُسمى الخلية النشطة بالخلية المحددة حالياً والتي يحيط بها إطار سميك.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `الرمز المستخدم لعملية الضرب في الصيغ الحسابية هو النجمة (*).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `الدالة المستخدمة لحساب مجموع القيم في نطاق من الخلايا هي:`, a: [`AVERAGE`, `SUM`, `COUNT`, `MAX`], c: 1 },
+      { q: `عنوان الخلية الناتجة عن تقاطع العمود B مع الصف 5 هو:`, a: [`5B`, `B-5`, `B5`, `5.B`], c: 2 },
+      { q: `لحساب أعلى قيمة في نطاق محدد من الأرقام نستخدم دالة:`, a: [`MIN`, `MAX`, `AVERAGE`, `SUM`], c: 1 },
+      { q: `لحساب أقل قيمة عددية في جدول البيانات نستخدم دالة:`, a: [`MIN`, `MAX`, `SUM`, `COUNT`], c: 0 },
+      { q: `الدالة التي تحسب المتوسط الحسابي لمجموعة من الدرجات هي:`, a: [`TOTAL`, `SUM`, `AVERAGE`, `MEAN`], c: 2 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9]
+  },
+  '2.2': {
+    unitNumber: 'الوحدة الثانية',
+    unitTitle: 'جداول البيانات',
+    lessonTitle: 'الدرس الثاني : المخططات البيانية وتنسيق الجداول',
+    nextLessonKey: '3.1',
+    questions: [
+      { q: `تُستخدم المخططات البيانية لتسهيل قراءة وفهم البيانات ومقارنتها بصرياً.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لا يمكن تغيير نوع المخطط البياني بعد إنشائه في برنامج إكسل.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يُستخدم المخطط الدائري بشكل أفضل لإظهار النسب المئوية وأجزاء الكل.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يمكن فرز البيانات في جدول إكسل تصاعدياً أو تنازلياً.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تساعد ميزة التصفية (Filter) على عرض البيانات التي تحقق شروطاً معينة فقط.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لإدراج مخطط بياني جديد نذهب إلى علامة تبويب:`, a: [`ملف`, `إدراج (Insert)`, `عرض`, `مراجعة`], c: 1 },
+      { q: `أفضل نوع مخطط بياني لتتبع التغيرات عبر فترات زمنية هو:`, a: [`المخطط الخطي (Line)`, `المخطط الدائري`, `المخطط المبعثر`, `المخطط الراداري`], c: 0 },
+      { q: `لدمج خليتين أو أكثر وجعل النص في المنتصف نستخدم أداة:`, a: [`التفاف النص`, `دمج وتوسيط`, `محاذاة لليمين`, `فرز وتصفية`], c: 1 },
+      { q: `يُطلق على العنصر الذي يشرح ما تمثله الألوان في المخطط البياني اسم:`, a: [`وسيلة الإيضاح (Legend)`, `عنوان المخطط`, `خطوط الشبكة`, `المحور الأفقي`], c: 0 },
+      { q: `تنسيق الخلايا كنسبة مئوية يضيف تلقائياً رمز:`, a: [`$`, `#`, `%`, `@`], c: 2 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9]
+  },
+
+  // UNIT 3: DATABASES
+  '3.1': {
+    unitNumber: 'الوحدة الثالثة',
+    unitTitle: 'قواعد البيانات',
+    lessonTitle: 'الدرس الأول : مقدمة عن قواعد البيانات',
+    nextLessonKey: '3.2',
+    questions: [
+      { q: `المعلومات: هي حقائق أولية لم يتم تنظيمها ولا تفسيرها.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `البيانات: هي المعارف والمعاني التي يدركها الإنسان.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `أنواع البيانات: أبجدية وعددية وأبجدية عددية.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تتكون البيانات العددية من جميع الحروف الأبجدية والفراغات.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `الرقم "-10" يُعتبر مثالاً على البيانات العددية.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `البيانات عبارة عن مدخلات لجهاز الحاسب بينما المعلومات هي المخرجات.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `قاعدة البيانات هي مجموعة من البيانات الأولية التي لا يمكن فرزها أو البحث فيها.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `في جداول قاعدة البيانات تكون الصفوف (أفقية) والأعمدة (عمودية).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `السجل في قاعدة البيانات: هو مجموعة كاملة من المعلومات التي تشير إلى كيان معين.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `الحقل يُطلق على الخلية التي تحتوي على عدة أنواع مختلفة من البيانات معاً.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يُنظم _______ البيانات في صفوف أفقية وأعمدة عمودية لتسهيل البحث والتحليل.`, a: [`الجدول`, `العددية`, `الأبجدية`, `الأبجدية العددية`], c: 0 },
+      { q: `تتكون البيانات _______ من أرقام من 0 إلى 9 ويمكن قياسها.`, a: [`العددية`, `الأبجدية`, `الأبجدية العددية`, `الحد الأقصى`], c: 0 },
+      { q: `تمثيل اسم شخص مثل "أحمد علي" يُصنف ضمن البيانات _______.`, a: [`الأبجدية`, `العددية`, `الجدول`, `الأبجدية العددية`], c: 0 },
+      { q: `لتمثيل الوقت، أو التاريخ، أو العنوان الوطني نستخدم البيانات _______.`, a: [`الأبجدية العددية`, `العددية`, `الأبجدية`, `الجدول`], c: 0 },
+      { q: `الدالة التي ترجع أعلى قيمة في نطاق من الأرقام في برنامج إكسل هي دالة _______.`, a: [`الحد الأقصى`, `الجدول`, `العددية`, `الأبجدية`], c: 0 }
+    ],
+    prizes: ["100", "200", "300", "500", "1,000", "2,000", "4,000", "8,000", "16,000", "32,000", "64,000", "125,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '3.2': {
+    unitNumber: 'الوحدة الثالثة',
+    unitTitle: 'قواعد البيانات',
+    lessonTitle: 'الدرس الثاني : إنشاء قاعدة بيانات',
+    nextLessonKey: '3.3',
+    questions: [
+      { q: `من البرامج التي يمكن استخدامها لإنشاء قاعدة بيانات مايكروسوفت بوربوينت.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `السجل في مايكروسوفت إكسل هو صف واحد من البيانات في جدول أو قاعدة بيانات.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لتحديد سجل في مايكروسوفت إكسل اضغط على رقم الصف الذي يحوي السجل.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `نستخدم مفتاح shift لتحديد سجلات متجاورة ومفتاح ctrl لتحديد سجلات متفرقة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لنسخ سجلات أو قصها أو حذفها يجب تحديدها أولا.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `من أمثلة قواعد لبيانات: درجات الطلاب في المدرسة، دفتر عناوين لمعلومات الطالب.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لا يمكن استخدام برنامج مايكروسوفت إكسل (Microsoft Excel) لإنشاء جدول قاعدة بيانات، فهو مخصص فقط للعمليات الحسابية.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يجب أن تتعلق جميع المعلومات الموجودة في قاعدة البيانات بنفس الموضوع.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يؤدي تطبيق ميزة "تنسيق كجدول" في إكسل تلقائياً إلى إضافة وظائف الفرز والتصفية إلى بياناتك.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لإضافة بيانات جديدة لاحقاً، يمكنك كتابتها في أول صف فارغ أسفل الجدول، ولن يتعرف عليها إكسل كسجل جديد.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يجب أن تتعلق جميع المعلومات الموجودة في قاعدة البيانات بنفس ________، فلا يمكن خلط بيانات الحيوانات مع بيانات الرياضة.`, a: [`الموضوع`, `صفوف`, `عمود`, `السجل`], c: 0 },
+      { q: `في مايكروسوفت إكسل، يتم تنظيم السجلات في ________ يحتوي كل منها على سجل مختلف.`, a: [`صفوف`, `التنسيق كجدول`, `الموضوع`, `عمود`], c: 0 },
+      { q: `يمثل كل ________ في الجدول حقلاً أو سمة مختلفة للسجل مثل الاسم أو العنوان.`, a: [`عمود`, `صفوف`, `الموضوع`, `السجل`], c: 0 },
+      { q: `يُطلق على صف واحد كامل من البيانات الخاصة بعنصر معين في قاعدة البيانات اسم ________.`, a: [`السجل`, `التنسيق كجدول`, `الموضوع`, `عمود`], c: 0 },
+      { q: `لجعل البرنامج يتعرف على عناوين الحقول ويضيف تصميماً منظماً، نستخدم ميزة ________ من مجموعة أنماط.`, a: [`التنسيق كجدول`, `صفوف`, `الموضوع`, `السجل`], c: 0 }
+    ],
+    prizes: ["100", "200", "300", "500", "1,000", "2,000", "4,000", "8,000", "16,000", "32,000", "64,000", "125,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '3.3': {
+    unitNumber: 'الوحدة الثالثة',
+    unitTitle: 'قواعد البيانات',
+    lessonTitle: 'الدرس الثالث : الفرز والتصفية',
+    nextLessonKey: '4.1',
+    questions: [
+      { q: `الفرز في مايكروسوفت إكسل يعيد ترتيب البيانات، بينما التصفية تظهر جزءاً منها فقط.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `من معايير الفرز والتصفية: الترتيب الأبجدي والترتيب الرقمي والترتيب الزمني.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `للفرز والتصفية فوائد منها: فهم البيانات وتنظيمها وسرعة الوصول إلى المعلومة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `نستطيع فرز النصوص من الأصغر إلى الأكبر.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `فرز التواريخ يكون من الأحدث إلى الأقدم والعكس.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يوجد نوعان من الفرز في الإكسل: فرز تصاعدي و فرز تنازلي.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `السهم الموجود في رأس العمود لا فائدة له.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `فرز الأرقام يكون فقط من الأصغر إلى الأكبر ولا يمكن فرزها من الأكبر إلى الأصغر.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `لإزالة معامل التصفية المطبق، يجب الضغط على السهم بجوار عنوان العمود واختيار "إلغاء تطبيق عامل التصفية".`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `عند فرز البيانات بناءً على عمود معين، فإن جميع البيانات في الجدول سيتغير موضعها بناءً على هذا الترتيب.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `عملية ترتيب البيانات بترتيب محدد بناءً على معايير محددة تسمى _________.`, a: [`الفرز`, `التصفية`, `تصاعدي`, `تنازلي`], c: 0 },
+      { q: `_________ تعرض جزءاً من البيانات التي تفي بشروط محددة مع الاحتفاظ بباقي البيانات دون حذفها.`, a: [`التصفية`, `الفرز`, `تصاعدي`, `ي إلى أ`], c: 0 },
+      { q: `لفرز النصوص أبجدياً من النهاية إلى البداية، نختار الفرز من _________.`, a: [`ي إلى أ`, `التصفية`, `تصاعدي`, `الفرز`], c: 0 },
+      { q: `الفرز الذي يرتب البيانات من أصغر قيمة إلى أكبرها يُعرف بالفرز الـ_________.`, a: [`تصاعدي`, `التصفية`, `الفرز`, `تنازلي`], c: 0 },
+      { q: `الفرز الذي يرتب الأرقام من الأكبر إلى الأصغر يُعرف بالفرز الـ_________.`, a: [`تنازلي`, `التصفية`, `الفرز`, `تصاعدي`], c: 0 }
+    ],
+    prizes: ["100", "200", "300", "500", "1,000", "2,000", "4,000", "8,000", "16,000", "32,000", "64,000", "125,000", "250,000", "500,000", "1,000,000"],
+    milestones: [4, 9, 14]
+  },
+
+  // UNIT 4: SCRATCH PROGRAMMING
+  '4.1': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس الأول : التكرار في سكراتش',
+    nextLessonKey: '4.2',
+    questions: [
+      { q: `توجد لبنات التكرار في سكراتش ضمن لبنات (الهيئة).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `للبنات التكرار في سكراتش خمسة أنواع.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `من أنواع لبنات التكرار لبنة ( كرر من بداية البرنامج).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `تقوم لبنة (كرر حتى) بتكرار الإجراء حتى يتحقق شرط معين.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `ليعمل التكرار نضع اللبنة التي نريد تكرارها داخل لبنة ( كرر حتى).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تعتبر لبنة (كرر حتى) من فئة لبنات الاستشعار (Sensing) في سكراتش.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `لإيقاف عمل لبنة (كرر باستمرار)، يجب ضغط علامة التوقف أو تنشيط لبنة (أوقف).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تمنع لبنة (ارتد إذا كنت عند الحافة) الكائن من الاستمرار في حركته عند ملامسة الحافة وتجعله يدور 180 درجة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يمكن تصميم وتعديل خلفية المنصة باستخدام أدوات الرسم الموجودة في علامة تبويب (الخلفيات).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يُمكن استخدام لبنة (مفتاح المسافة مضغوط؟) لإيقاف حركة الكائن عند الضغط عليها من لوحة المفاتيح.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يتم استخدام لبنة (__________) عندما لا تعرف عدد التكرارات مسبقاً ويتوقف التكرار حين يصبح الشرط صحيحاً.`, a: [`كرر باستمرار`, `التحكم`, `كرر حتى`, `أوقف`], c: 2 },
+      { q: `تعد لبنة (كرر حتى) إحدى لبنات فئة __________.`, a: [`التحكم`, `كرر حتى`, `أوقف`, `كرر باستمرار`], c: 0 },
+      { q: `ستنفذ لبنة (__________) اللبنات الموجودة بداخلها دون توقف إلى أن يتم إنهاؤها يدوياً أو برمجياً.`, a: [`كرر باستمرار`, `كرر حتى`, `أوقف`, `التحكم`], c: 0 },
+      { q: `لإيقاف جميع المقاطع البرمجية من داخل المقطع نفسه، نستخدم لبنة (__________).`, a: [`كرر حتى`, `أوقف`, `ارتد إذا كنت عند الحافة`, `التحكم`], c: 1 },
+      { q: `لمنع الكائن من الاستمرار في حركته عند الوصول لزوايا الشاشة، نستخدم لبنة (__________).`, a: [`أوقف`, `كرر حتى`, `التحكم`, `ارتد إذا كنت عند الحافة`], c: 3 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '4.2': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس الثاني : برمجة العمليات الحسابية',
+    nextLessonKey: '4.3',
+    questions: [
+      { q: `العمليات المنطقية في سكراتش هي: أكبر من ، أصغر من ، يساوي.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `المتغير: هو مكان محدد في ذاكرة الحاسب، له اسم لا يتكرر وقيمة، وتخزن به البيانات.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `توجد اللبنات الخاصة بـ (المتغيرات) في فئة لبنات (الأحداث).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يمكن للمتغيرات تخزين أي نوع من البيانات مثل: الأرقام والنصوص.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لا يمكن حذف المتغير أو تغيير اسمه بعد إضافته.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `لإجراء عملية قسمة في سكراتش نكتب الرقمين بهذا الشكل (6 ÷ 3).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يُستخدم الرمز (*) في البرمجة لتمثيل عملية الضرب.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يمكن أن يكون لمتغيرين أو أكثر في سكراتش نفس الاسم تماماً.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يمكن للمتغيرات في سكراتش تخزين بيانات مثل الأرقام أو السلاسل النصية (النصوص).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لا يمكن تعديل اسم المتغير أو حذفه بعد إنشائه في سكراتش.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `تسمى الرموز التي تستخدم لإجراء الحسابات في البرمجة بـ _________.`, a: [`المعاملات`, `العمليات`, `الذاكرة`, `غير`], c: 0 },
+      { q: `يمكنك العثور على المعاملات الرياضية في سكراتش ضمن فئة لبنات _________.`, a: [`المعاملات`, `العمليات`, `فريداً`, `غير`], c: 1 },
+      { q: `يشير اسم المتغير إلى مكان محدد في _________ جهاز الحاسب لتخزين البيانات.`, a: [`العمليات`, `الذاكرة`, `فريداً`, `المعاملات`], c: 1 },
+      { q: `من شروط تسمية المتغيرات أن يكون اسم المتغير _________ ولا يتكرر.`, a: [`غير`, `المعاملات`, `فريداً`, `الذاكرة`], c: 2 },
+      { q: `لزيادة أو نقصان قيمة العداد في اللعبة بمقدار معين، نستخدم لبنة _________ بمقدار.`, a: [`فريداً`, `غير`, `الذاكرة`, `العمليات`], c: 1 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '4.3': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس الثالث : اتخاذ القرارات',
+    nextLessonKey: '4.4',
+    questions: [
+      { q: `لا نستطيع رسم خلفية في سكراتش.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `اتخاذ القرار هو تحديد ما سيحدث إذا كان الشرط صحيحا أو خطأ.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تستخدم عملية اتخاذ القرار في البرمجة لترتيب تنفيذ الأوامر.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `من لبنات اتخاذ القرار لبنة ( إذا () وإلا ).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `توجد لبنة ( إذا () وإلا ) ضمن لبنات الحركة.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `إذا كان الشرط خطأ في لبنة (إذا () وإلا) يتم تنفيذ الشرط الموجود تحت (إذا (if)).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `إذا كان الشرط صحيحا في لبنة (إذا () وإلا) يتم تنفيذ الشرط الموجود تحت (إلا (else)).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يمكنك العثور على لبنة "إذا ( ) وإلا" في فئة لبنات الحركة.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `اللبنات التي يتم تنفيذها إذا كان الشرط خطأ توضع دائمًا تحت "وإلا".`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `في سكراتش، يمكن للكائن أن يسأل المستخدم سؤالاً ويتخذ قرارًا برمجيًا بناءً على إجابته.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تُستخدم عملية _______ في البرمجة لترتيب تنفيذ الأوامر.`, a: [`اتخاذ القرار`, `شروط`, `صحيحًا`, `التحكم`], c: 0 },
+      { q: `تحديد خيار في البرمجة غالبًا ما يتضمن اتخاذ قرار بناءً على _______ معينة.`, a: [`المخطط الانسيابي`, `شروط`, `صحيحًا`, `اتخاذ القرار`], c: 1 },
+      { q: `في لبنة "إذا ( ) وإلا"، يتم تنفيذ اللبنات الموجودة تحت "إذا" إذا كان الشرط _______.`, a: [`التحكم`, `شروط`, `المخطط الانسيابي`, `صحيحًا`], c: 3 },
+      { q: `يمكنك العثور على لبنة "إذا ( ) وإلا" في فئة لبنات _______.`, a: [`التحكم`, `اتخاذ القرار`, `شروط`, `صحيحًا`], c: 0 },
+      { q: `يمكن استخدام _______ لتمثيل تسلسل الخطوات والشروط للعبة بشكل رسومي.`, a: [`صحيحًا`, `المخطط الانسيابي`, `التحكم`, `شروط`], c: 1 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '4.4': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس الرابع : الإحداثيات في سكراتش',
+    nextLessonKey: '4.5',
+    questions: [
+      { q: `نظام الإحداثيات هو نظام يستخدم رقمًا أو عدة أرقام لتحديد موضع النقاط في مساحة محددة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تحدد قيمة x موقع الكائن على المحور الرأسي.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `في سكراتش لا توجد لبنة تحرك الكائن إلى موضع عشوائي.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يوجد نوعان لنظام الاحداثيات: نظام خطي (خط أفقي) و نظام ديكارتي (خطين رأسي وأفقي).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `نقطة التقاء الخط الرأسي مع الخط الأفقي تمثل القيمة صفر (0).`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `المحور الأفقي يسمى y والمحور الرأسي يسمى x.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `توجد لبنة عند ضغط مفتاح () في فئة لبنات الأحداث.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `إذا كانت القيمة في لبنة (غير الموضع س بمقدار) سالبة، فإن الكائن يتحرك إلى اليمين.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `يمكن استخدام لبنة (المفتاح مضغوط؟) لاكتشاف متى يضغط اللاعب على مفتاح معين ضمن حلقة تكرار مثل "كرر باستمرار".`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لبنة (اذهب إلى موضع عشوائي) تنقل الكائن إلى موقع عشوائي على المنصة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `نظام الإحداثيات _______ هو أبسط أنواع نظم الإحداثيات، ويتكون من خط أفقي واحد مرقم.`, a: [`الخطي`, `البكسل`, `انزلق`, `الأحداث`], c: 0 },
+      { q: `تتكون المنصة في سكراتش من مجموعة من النقاط تُسمى _______.`, a: [`الخطي`, `البكسل`, `المفاتيح`, `انزلق`], c: 1 },
+      { q: `لبنة _______ خلال 1 ثانية تجعل الكائن يتحرك ببطء وبشكل مرئي نحو إحداثيات محددة.`, a: [`البكسل`, `الخطي`, `انزلق`, `الأحداث`], c: 2 },
+      { q: `تعتبر لوحة _______ الطريقة الأكثر شيوعاً للتحكم في تحريك الكائنات داخل الألعاب.`, a: [`الخطي`, `البكسل`, `انزلق`, `المفاتيح`], c: 3 },
+      { q: `لبنة (عند ضغط مفتاح المسافة) يمكن العثور عليها ضمن فئة لبنات _______.`, a: [`الأحداث`, `انزلق`, `المفاتيح`, `الخطي`], c: 0 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '4.5': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس الخامس : القرارات المركبة في سكراتش',
+    nextLessonKey: '4.6',
+    questions: [
+      { q: `المعاملات في سكراتش لها أربعة أنواع: شرطية، منطقية، حسابية، حقيقة.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `للمعاملات المنطقية ثلاثة أنواع: ()و() - ()أو() - ليس().`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `توجد لبنات الانتظار في سكراتش في فئة التحكم.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `عدد لبنات الانتظار في سكراتش أربع لبنات.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `في المعامل المنطقي (و)، إذا كان أحد الشرطين خطأ فإن اللبنة ترجع نتيجة صحيحة.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `تتحقق لبنة (ليس) من الشرط، فإذا كان الشرط خطأ فإنها ترجع صحيحاً.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لتحريك الكائن لأعلى أو لأسفل، تحتاج إلى تغيير قيمة الإحداثي y.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تقوم لبنة "أوقف (الكل)" بإيقاف المقاطع البرمجية بمجرد تنفيذ جميع الحركات في اللعبة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تضم لبنة (أو) لبنتين منطقيتين، وإذا كان هناك شرط واحد صحيح على الأقل فإن اللبنة ترجع صحيحاً.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لإنشاء متغير لحساب النقاط (points) ننتقل إلى فئة لبنات "المتغيرات" ونضغط على "إنشاء متغير".`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تتحقق لبنة ________ ( ) من الشرط بداخلها، فإذا كان صحيحاً فإنها ترجع خطأ.`, a: [`ليس`, `ص (Y)`, `س (X)`, `أسرع`], c: 0 },
+      { q: `لتحريك الكائن لأعلى أو لأسفل في المنصة، نحتاج إلى تغيير قيمة الإحداثي ________.`, a: [`س (X)`, `ليس`, `ص (Y)`, `المتغيرات`], c: 2 },
+      { q: `لتحريك الكائن للأمام أو للخلف (يميناً ويساراً)، نحتاج إلى تغيير قيمة الإحداثي ________.`, a: [`ص (Y)`, `س (X)`, `أسرع`, `المتغيرات`], c: 1 },
+      { q: `الكائنات التي تمنح نقاطاً في الألعاب عادة ما تتحرك بشكل ________ لترقية مستوى صعوبة اللعبة.`, a: [`ص (Y)`, `س (X)`, `ليس`, `أسرع`], c: 3 },
+      { q: `لإضافة عداد للنقاط في اللعبة، يجب إنشاء متغير جديد من فئة لبنات ________.`, a: [`المتغيرات`, `س (X)`, `ص (Y)`, `أسرع`], c: 0 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  },
+  '4.6': {
+    unitNumber: 'الوحدة الرابعة',
+    unitTitle: 'البرمجة باستخدام سكراتش',
+    lessonTitle: 'الدرس السادس : الألعاب في سكراتش',
+    nextLessonKey: null,
+    questions: [
+      { q: `الرسوم المتحركة: هي تقنية تعالج الصور الثابتة والكائنات لتظهر كصور متحركة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `للمتغيرات في سكراتش فوائد كثيرة منها كسب نقاط وخسارتها في الألعاب.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لإضافة متغير جديد من فئة التحكم نختار (إنشاء متغير).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `نستطيع إضافة متغيرين أو أكثر بنفس الاسم في البرنامج الواحد.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `لكل متغير: اسم و قيمة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `لجعل حركة المركبة الفضائية تبدو أكثر واقعية، يتم تغيير مظهرها عند الضغط على مفاتيح الأسهم.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `يتم استخدام لبنة "إذا ( ) وإلا" للتحقق مما إذا كانت المركبة الفضائية ستكسب النقاط أم لا عند ملامستها للنجمة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `في سكراتش، لا يمكن تغيير حجم الكائن واتجاهه إلا من خلال المقاطع البرمجية فقط.`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `لإنشاء متغير النقاط (points) ننتقل إلى فئة لبنات المتغيرات.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تقوم لبنة "أوقف (الكل)" بإيقاف جميع المقاطع البرمجية بمجرد تنفيذ الحركات ونهاية اللعبة.`, a: [`صح`, `خطأ`], c: 0 },
+      { q: `تقنية _________ تعالج الصور أو الكائنات الثابتة لتظهر كصور متحركة.`, a: [`الرسوم المتحركة`, `المظهر`, `الأيسر`, `النجمة`], c: 0 },
+      { q: `لجعل حركة المركبة أكثر واقعية، نقوم بتغيير _________ عند الضغط على مفاتيح الأسهم.`, a: [`الرسوم المتحركة`, `المظهر`, `النجمة`, `أسرع`], c: 1 },
+      { q: `تتحرك السحب والمباني من الجانب الأيمن إلى الجانب _________ للمنصة لتبدو المركبة وكأنها تتقدم.`, a: [`النجمة`, `المظهر`, `الأيسر`, `أسرع`], c: 2 },
+      { q: `عندما تعبر المركبة الفضائية كائن _________، يكسب اللاعب نقاطاً.`, a: [`الأيسر`, `الرسوم المتحركة`, `المظهر`, `النجمة`], c: 3 },
+      { q: `عادة ما تتحرك الكائنات التي تمنح نقاطاً بشكل _________ لترقية مستوى صعوبة اللعبة.`, a: [`أسرع`, `النجمة`, `المظهر`, `الرسوم المتحركة`], c: 0 }
+    ],
+    prizes: ["100", "500", "1,000", "5,000", "10,000", "50,000", "100,000", "250,000", "500,000", "1,000,000", "2,000,000", "3,000,000", "4,000,000", "5,000,000", "6,000,000"],
+    milestones: [4, 9, 14]
+  }
+};
+
+/* =====================================================================
+   APP STATE & VARIABLES
+   ===================================================================== */
+let currentLessonKey = '1.1';
+let currentQuestions = [];
+let currentPrizes = [];
+let currentMilestones = [];
+
+let curQIndex = 0;
+let isAnswered = false;
+let hiddenIndices = [];
+let timeLeft = 30;
+let timerInterval = null;
+let lessonStartTime = 0; 
+let gameLevel = 'advanced'; 
+
+// Lifelines state
+let lifelinesUsed = {
+  fifty: false,
+  phone: false,
+  audience: false,
+  pause: false,
+  bomb: false
+};
+
+// Cumulative session progress (stores passed lessons)
+let sessionCompletedLessons = [];
+
+// Helper DOM selector
+const $ = (id) => document.getElementById(id);
+
+/* =====================================================================
+   GENDER DETECTION HELPER
+   ===================================================================== */
+const FEMININE_NAMES = new Set([
+  'مريم', 'فاطمة', 'فاطمه', 'عائشة', 'عائشه', 'خديجة', 'خديجه', 'زينب', 'سارة', 'ساره', 'نورة', 'نوره',
+  'ريم', 'هند', 'شهد', 'رغد', 'رهف', 'حنين', 'جنى', 'جود', 'ليان', 'دانة', 'دانه', 'أمل', 'امل',
+  'بدور', 'لطيفة', 'لطيفه', 'أسماء', 'اسماء', 'شيماء', 'نجلاء', 'هيفاء', 'مها', 'هناء', 'منى', 'هدى',
+  'رنا', 'سلمى', 'لمى', 'ياسمين', 'تسنيم', 'إيمان', 'ايمان', 'عبير', 'روان', 'رزان', 'بيان', 'خلود',
+  'غادة', 'غاده', 'جميلة', 'جميله', 'نوال', 'منال', 'أروى', 'اروى', 'لمياء', 'صفاء', 'وفاء', 'سمية',
+  'سميه', 'أميرة', 'اميره', 'أفنان', 'افنان', 'بشرى', 'يارا', 'ريماس', 'سحاب', 'جواهر', 'مشاعل',
+  'عفاف', 'وسن', 'وجد', 'ترف', 'ريف', 'غلا', 'تالا', 'سما', 'جوري', 'تولين', 'وتين', 'إيلاف'
+]);
+
+function isFeminine(fullName) {
+  if (!fullName) return false;
+  const clean = fullName.replace(/^(أ\.|أ|أستاذة|المعلمة|د\.)\s*/, '').trim();
+  const firstWord = clean.split(/\s+/)[0];
+  if (FEMININE_NAMES.has(firstWord)) return true;
+  if (firstWord.endsWith('ة') || firstWord.endsWith('ه') || firstWord.endsWith('ى') || firstWord.endsWith('اء')) {
+    const maleExceptions = new Set(['حمزة', 'حمزه', 'طلحة', 'طلحه', 'أسامة', 'اسامه', 'قتادة', 'قتاده', 'عبيدة', 'عبيده', 'معاوية', 'معاويه', 'حذيفة', 'حذيفه']);
+    if (maleExceptions.has(firstWord)) return false;
+    return true;
+  }
+  return false;
+}
+
+/* =====================================================================
+   INITIALIZATION & PERSISTENCE
+   ===================================================================== */
+window.addEventListener('DOMContentLoaded', async () => {
+  // Clear old buggy history versions to avoid conflicts
+  localStorage.removeItem('whowants_history');
+  
+  // Load state via standard local storage to ensure it persists across reloads perfectly
+  try {
+    const localHist = localStorage.getItem('whowants_history_v3');
+    if (localHist) {
+      const state = JSON.parse(localHist);
+      if (state.studentName) $('studentName').value = state.studentName;
+      if (state.studentClass) $('studentClass').value = state.studentClass;
+      if (state.teacherName) $('teacherName').value = state.teacherName;
+      if (state.teacherCity) $('teacherCity').value = state.teacherCity;
+      if (state.teacherSchool) $('teacherSchool').value = state.teacherSchool;
+      if (state.completedLessons && Array.isArray(state.completedLessons)) {
+        sessionCompletedLessons = state.completedLessons;
+        updatePrevCertBox();
+      }
+    }
+  } catch(e) {}
+});
+
+// Listener to detect if student types a different name
+$('studentName').addEventListener('input', function() {
+  const currentName = this.value.trim();
+  try {
+    const localHist = localStorage.getItem('whowants_history_v3');
+    if (localHist) {
+      const state = JSON.parse(localHist);
+      if (state.studentName && state.studentName !== currentName && currentName !== '') {
+         // Name differs from saved history, hide certificate until they play a lesson
+         $('prevCertBox').classList.add('hidden');
+      } else if (sessionCompletedLessons.length > 0) {
+         // Name matches or is empty, show certificate if they have lessons
+         $('prevCertBox').classList.remove('hidden');
+      }
+    }
+  } catch(e) {}
+});
+
+async function saveCurrentAppState() {
+  const state = {
+    studentName: $('studentName').value.trim(),
+    studentClass: $('studentClass').value.trim(),
+    teacherName: $('teacherName').value.trim(),
+    teacherCity: $('teacherCity').value.trim(),
+    teacherSchool: $('teacherSchool').value.trim(),
+    completedLessons: sessionCompletedLessons
+  };
+  try {
+    localStorage.setItem('whowants_history_v3', JSON.stringify(state));
+  } catch(e) {}
+}
+
+function updatePrevCertBox() {
+  const box = $('prevCertBox');
+  if (box) {
+    if (sessionCompletedLessons.length > 0) {
+      box.classList.remove('hidden');
+    } else {
+      box.classList.add('hidden');
+    }
+  }
+}
+
+// أداة مسح بيانات اللاعب الحالي والبدء من جديد
+function resetPlayer() {
+  playSelectSound();
+  if(confirm("هل أنت متأكد من رغبتك في مسح بيانات وإنجازات اللاعب الحالي للبدء بلاعب جديد؟")) {
+    $('studentName').value = '';
+    $('studentClass').value = '';
+    sessionCompletedLessons = [];
+    localStorage.removeItem('whowants_history_v3');
+    updatePrevCertBox();
+    $('studentName').focus();
+  }
+}
+
+function toggleUnitAccordion(unitNum) {
+  for (let i = 1; i <= 4; i++) {
+    const card = $('unitCard' + i);
+    if (card) {
+      if (i === unitNum) {
+        card.classList.toggle('open');
+      } else {
+        card.classList.remove('open');
+      }
+    }
+  }
+  playSelectSound();
+}
+
+function setLevel(lvl) {
+  gameLevel = lvl;
+  playSelectSound();
+}
+
+function handleSocialClick(e, name) {
+  // Links are now handled natively via standard anchor href target="_blank"
+  // so no need to stop propagation unless it's a generic popup
+  if(name === 'تواصل') {
+     e.preventDefault();
+  }
+}
+
+function toggleFullscreen() {
+  try {
+    if (!document.fullscreenElement) {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) docEl.requestFullscreen().catch(()=>{});
+      else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+      else if (docEl.msRequestFullscreen) docEl.msRequestFullscreen();
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+    }
+  } catch(e){}
+}
+
+/* =====================================================================
+   STARTING A LESSON
+   ===================================================================== */
+function selectLesson(lessonKey) {
+  const name = $('studentName').value.trim();
+  if (!name) {
+    playWrongSound();
+    openModal(`
+      <div class="modal-icon no-print">⚠️</div>
+      <h2 class="modal-title no-print">تنبيه</h2>
+      <p class="modal-text no-print">الرجاء كتابة اسمك الثلاثي في خانة بيانات الطالب قبل بدء المراجعة لتسجيل شهادتك باسمك!</p>
+      <button class="btn-action btn-gold no-print" onclick="closeModal(); document.getElementById('studentName').focus();">حسناً، فهمت</button>
+    `);
+    return;
+  }
+
+  // نظام الذكاء التلقائي: تصفير الشهادة إذا تغير اسم اللاعب
+  try {
+    const localHist = localStorage.getItem('whowants_history_v3');
+    if (localHist) {
+      const state = JSON.parse(localHist);
+      if (state.studentName && state.studentName !== name) {
+        sessionCompletedLessons = []; // اسم جديد يعني لاعب جديد
+      }
+    }
+  } catch(e) {}
+
+  playSelectSound();
+  initAudio();
+  saveCurrentAppState();
+
+  currentLessonKey = lessonKey;
+  const bank = lessonBanks[lessonKey];
+  
+  if (!bank.questions || bank.questions.length === 0) {
+    openModal(`
+      <div class="modal-icon no-print">🚀</div>
+      <h2 class="modal-title no-print">أنت بطل!</h2>
+      <p class="modal-text no-print">الأسئلة الخاصة بهذا الدرس سيتم إضافتها قريباً، بانتظار تحديث المعلم.</p>
+      <button class="btn-action btn-gold no-print" onclick="closeModal()">حسناً</button>
+    `);
+    return;
+  }
+  
+  currentQuestions = bank.questions;
+  currentPrizes = bank.prizes;
+  currentMilestones = bank.milestones;
+
+  // Update Game Header Greeting
+  const isGirl = isFeminine(name);
+  $('greetingPrefix').textContent = isGirl ? 'مرحباً بمبرمجة المستقبل:' : 'مرحباً بمبرمج المستقبل:';
+  $('gameStudentName').textContent = name;
+
+  // Update Lesson Ribbon
+  $('ribbonUnitBadge').textContent = bank.unitNumber;
+  $('ribbonLessonTitle').textContent = bank.lessonTitle;
+
+  // Handle Beginner vs Advanced Timer UI
+  const timerWidget = $('timerWidget');
+  const pauseLifeline = $('lstop');
+  if (gameLevel === 'beginner') {
+    timerWidget.style.display = 'none';
+    if (pauseLifeline) pauseLifeline.style.display = 'none';
+  } else {
+    timerWidget.style.display = 'flex';
+    if (pauseLifeline) pauseLifeline.style.display = 'flex';
+  }
+
+  // Hide the standalone start page exit button when starting a game
+  const startExit = $('startExitBtn');
+  if(startExit) startExit.classList.add('hidden');
+  
+  // Hide next stage container initially
+  $('nextStageContainer').classList.add('hidden');
+  $('nextStageContainer').innerHTML = '';
+
+  $('start').classList.add('hidden');
+  $('game').classList.remove('hidden');
+
+  restartLesson();
+}
+
+function restartLesson() {
+  curQIndex = 0;
+  lifelinesUsed = { fifty: false, phone: false, audience: false, pause: false, bomb: false };
+  ['l50', 'lph', 'lau', 'lstop', 'lbomb'].forEach(id => {
+    const el = $(id);
+    if (el) el.disabled = false;
+  });
+  
+  lessonStartTime = Date.now(); // بدء حساب الوقت المستغرق
+  $('nextStageContainer').classList.add('hidden');
+  closeModal();
+  loadQuestion();
+}
+
+/* =====================================================================
+   QUESTION RENDERING & LOGIC
+   ===================================================================== */
+function loadQuestion() {
+  if (!currentQuestions || currentQuestions.length === 0 || !currentQuestions[curQIndex]) return;
+  isAnswered = false;
+  hiddenIndices = [];
+  const q = currentQuestions[curQIndex];
+
+  // Update question meta
+  const qnumText = $('qnumText');
+  if (qnumText) qnumText.textContent = `السؤال ${curQIndex + 1} من ${currentQuestions.length}`;
+  const qtext = $('qtext');
+  if (qtext) qtext.textContent = q.q;
+
+  // Re-trigger question box animation
+  const box = $('qbox');
+  if (box) {
+    box.style.animation = 'none';
+    box.offsetHeight; // trigger reflow
+    box.style.animation = '';
+  }
+
+  // Render Answers
+  const container = $('answersContainer');
+  if (container) {
+    const letters = ['أ', 'ب', 'ج', 'د'];
+    const isTrueFalse = q.a && q.a.length === 2;
+    container.className = isTrueFalse ? 'answers-grid two-options' : 'answers-grid';
+
+    container.innerHTML = (q.a || []).map((optText, i) => {
+      const letter = isTrueFalse ? (i === 0 ? '✓' : '✗') : letters[i];
+      return `
+        <button class="ans-btn" id="ansBtn${i}" style="animation: fadeIn 0.3s ease-out ${i * 0.08}s backwards" onclick="handleAnswer(${i})">
+          <span class="letter-badge">${letter}</span>
+          <span>${optText}</span>
+        </button>
+      `;
+    }).join('');
+  }
+
+  renderLadder();
+  startTimer();
+  updateLifelinesUI();
+}
+
+function renderLadder() {
+  const ladder = $('ladderList');
+  if (!ladder || !currentPrizes) return;
+  ladder.innerHTML = currentPrizes.map((p, i) => {
+    const isMs = currentMilestones && currentMilestones.includes(i);
+    const isPassed = i < curQIndex;
+    const isCur = i === curQIndex;
+    let cls = 'ladder-step';
+    if (isMs) cls += ' ms';
+    if (isPassed) cls += ' passed';
+    if (isCur) cls += ' cur';
+
+    return `
+      <li class="${cls}">
+        <span>${i + 1}</span>
+        <span>${p} نقطة</span>
+      </li>
+    `;
+  }).join('');
+}
+
+function getAnswerButtons() {
+  return [...document.querySelectorAll('.ans-btn')];
+}
+
+function updateLifelinesUI() {
+  const hasQ = currentQuestions && currentQuestions.length > 0;
+  const l50 = $('l50'); if (l50) l50.disabled = lifelinesUsed.fifty || isAnswered || !hasQ;
+  const lph = $('lph'); if (lph) lph.disabled = lifelinesUsed.phone || isAnswered || !hasQ;
+  const lau = $('lau'); if (lau) lau.disabled = lifelinesUsed.audience || isAnswered || !hasQ;
+  const lstop = $('lstop'); if (lstop) lstop.disabled = lifelinesUsed.pause || isAnswered || (gameLevel === 'beginner') || !hasQ;
+  const lbomb = $('lbomb'); if (lbomb) lbomb.disabled = lifelinesUsed.bomb || isAnswered || !hasQ;
+}
+
+/* =====================================================================
+   TIMER ENGINE
+   ===================================================================== */
+function startTimer() {
+  clearInterval(timerInterval);
+  if (gameLevel === 'beginner') {
+    const tNum = $('timerNum');
+    if (tNum) tNum.textContent = '∞';
+    const widget = $('timerWidget');
+    if (widget) {
+      widget.style.setProperty('--p', '100%');
+      widget.classList.remove('low');
+    }
+    return;
+  }
+
+  timeLeft = 30;
+  drawTimer();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    drawTimer();
+    playTickSound();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeUp();
+    }
+  }, 1000);
+}
+
+function drawTimer() {
+  const widget = $('timerWidget');
+  if (widget) {
+    const percent = (timeLeft / 30) * 100;
+    widget.style.setProperty('--p', `${percent}%`);
+    widget.classList.toggle('low', timeLeft <= 10);
+  }
+  const tNum = $('timerNum');
+  if (tNum) tNum.textContent = timeLeft;
+}
+
+function handleTimeUp() {
+  if (isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  isAnswered = true;
+  updateLifelinesUI();
+  playWrongSound();
+
+  const btns = getAnswerButtons();
+  btns.forEach(b => b.disabled = true);
+  const correctIdx = currentQuestions[curQIndex].c;
+  if (btns[correctIdx]) btns[correctIdx].classList.add('correct');
+
+  setTimeout(() => {
+    handleGameOver(false, calculateGuaranteedPrize());
+  }, 1600);
+}
+
+function calculateGuaranteedPrize() {
+  let safe = "0";
+  if (!currentMilestones || !currentPrizes) return safe;
+  currentMilestones.forEach(m => {
+    if (curQIndex >= m && currentPrizes[m]) {
+      safe = currentPrizes[m];
+    }
+  });
+  return safe;
+}
+
+/* =====================================================================
+   ANSWER PROCESSING
+   ===================================================================== */
+function handleAnswer(choiceIdx) {
+  if (isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  isAnswered = true;
+  clearInterval(timerInterval);
+  updateLifelinesUI();
+  playSelectSound();
+
+  const btns = getAnswerButtons();
+  btns.forEach(b => b.disabled = true);
+  if (btns[choiceIdx]) btns[choiceIdx].classList.add('selected');
+
+  const correctIdx = currentQuestions[curQIndex].c;
+
+  // TV Suspense Delay
+  setTimeout(() => {
+    if (btns[choiceIdx]) btns[choiceIdx].classList.remove('selected');
+
+    if (choiceIdx === correctIdx) {
+      if (btns[choiceIdx]) btns[choiceIdx].classList.add('correct');
+      playCorrectSound();
+
+      setTimeout(() => {
+        if (curQIndex === currentQuestions.length - 1) {
+          // Reached the Million!
+          handleGameOver(true, currentPrizes[currentPrizes.length - 1]);
+        } else {
+          curQIndex++;
+          loadQuestion();
+        }
+      }, 1600);
+
+    } else {
+      if (btns[choiceIdx]) btns[choiceIdx].classList.add('wrong');
+      if (btns[correctIdx]) btns[correctIdx].classList.add('correct');
+      playWrongSound();
+
+      setTimeout(() => {
+        handleGameOver(false, calculateGuaranteedPrize());
+      }, 1800);
+    }
+  }, 1400);
+}
+
+/* =====================================================================
+   5 HELPER LIFELINES
+   ===================================================================== */
+function useFiftyFifty() {
+  if (lifelinesUsed.fifty || isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  lifelinesUsed.fifty = true;
+  updateLifelinesUI();
+  playSelectSound();
+
+  const correctIdx = currentQuestions[curQIndex].c;
+  const totalOptions = (currentQuestions[curQIndex].a || []).length;
+  const wrongIndices = [];
+  for (let i = 0; i < totalOptions; i++) {
+    if (i !== correctIdx) wrongIndices.push(i);
+  }
+
+  // Shuffle wrong indices
+  wrongIndices.sort(() => Math.random() - 0.5);
+
+  const countToHide = totalOptions === 4 ? 2 : 1;
+  hiddenIndices = wrongIndices.slice(0, countToHide);
+
+  const btns = getAnswerButtons();
+  hiddenIndices.forEach(idx => {
+    if (btns[idx]) {
+      btns[idx].classList.add('gone');
+      btns[idx].disabled = true;
+    }
+  });
+}
+
+function usePhoneAFriend() {
+  if (lifelinesUsed.phone || isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  lifelinesUsed.phone = true;
+  updateLifelinesUI();
+  playSelectSound();
+
+  const q = currentQuestions[curQIndex];
+  if (!q || !q.a) return;
+  const isTF = q.a.length === 2;
+  const letters = ['أ', 'ب', 'ج', 'د'];
+  let friendChoice = q.c;
+
+  // 85% accuracy
+  if (Math.random() >= 0.85) {
+    const wrongAvailable = [];
+    for (let i = 0; i < q.a.length; i++) {
+      if (i !== q.c && !hiddenIndices.includes(i)) wrongAvailable.push(i);
+    }
+    if (wrongAvailable.length > 0) {
+      friendChoice = wrongAvailable[Math.floor(Math.random() * wrongAvailable.length)];
+    }
+  }
+
+  const confidence = Math.floor(Math.random() * 25) + 75; // 75% - 99%
+  const choiceLabel = isTF ? q.a[friendChoice] : `${letters[friendChoice]}: ${q.a[friendChoice]}`;
+
+  openModal(`
+    <div class="modal-icon no-print">📞</div>
+    <h2 class="modal-title no-print">اتصال بصديق</h2>
+    <p class="modal-text no-print" style="font-size: 18px; margin-bottom: 8px;">"أهلاً يا صديقي! راجعت كتاب المهارات الرقمية جيداً وأعتقد أن الحل هو..."</p>
+    <div class="title-gold no-print" style="font-size: 26px; margin: 12px 0;">${choiceLabel}</div>
+    <p class="no-print" style="color: var(--neon-cyan); font-weight: 700; margin-bottom: 24px;">نسبة ثقة الصديق بالإجابة: ${confidence}%</p>
+    <button class="btn-action btn-gold no-print" onclick="closeModal()">شكراً لك!</button>
+  `);
+}
+
+function useAudiencePoll() {
+  if (lifelinesUsed.audience || isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  lifelinesUsed.audience = true;
+  updateLifelinesUI();
+  playSelectSound();
+
+  const q = currentQuestions[curQIndex];
+  if (!q || !q.a) return;
+  const isTF = q.a.length === 2;
+  const letters = ['أ', 'ب', 'ج', 'د'];
+  const optsCount = q.a.length;
+  const correctIdx = q.c;
+
+  const votes = new Array(optsCount).fill(0);
+  let remaining = 100;
+
+  // Correct answer gets high vote (45% - 75%)
+  votes[correctIdx] = Math.floor(Math.random() * 30) + 48;
+  remaining -= votes[correctIdx];
+
+  const wrongEligible = [];
+  for (let i = 0; i < optsCount; i++) {
+    if (i !== correctIdx && !hiddenIndices.includes(i)) wrongEligible.push(i);
+  }
+
+  wrongEligible.forEach((idx, k) => {
+    if (k === wrongEligible.length - 1) {
+      votes[idx] = remaining;
+    } else {
+      const take = Math.floor(Math.random() * (remaining / (wrongEligible.length - k)));
+      votes[idx] = take;
+      remaining -= take;
+    }
+  });
+
+  const barsHtml = votes.map((pct, i) => {
+    const lbl = isTF ? (i === 0 ? 'صح' : 'خطأ') : letters[i];
+    return `
+      <div class="bar-col">
+        <span class="bar-val">${pct}%</span>
+        <div class="bar-fill" id="pollBar${i}" style="height: 0;" data-target="${pct}"></div>
+        <span class="bar-label">${lbl}</span>
+      </div>
+    `;
+  }).join('');
+
+  openModal(`
+    <div class="modal-icon no-print">👥</div>
+    <h2 class="modal-title no-print">استطلاع الجمهور</h2>
+    <p class="modal-text no-print">تصويت جمهور قاعة المهارات الرقمية:</p>
+    <div class="bars-container no-print">${barsHtml}</div>
+    <button class="btn-action btn-gold no-print" onclick="closeModal()">إغلاق ومتابعة الحل</button>
+  `);
+
+  setTimeout(() => {
+    votes.forEach((pct, i) => {
+      const bar = $('pollBar' + i);
+      if (bar) bar.style.height = `${pct * 1.5}px`;
+    });
+  }, 60);
+}
+
+function usePauseTimer() {
+  if (lifelinesUsed.pause || isAnswered || gameLevel === 'beginner' || !currentQuestions || !currentQuestions[curQIndex]) return;
+  lifelinesUsed.pause = true;
+  clearInterval(timerInterval);
+  updateLifelinesUI();
+  playSelectSound();
+
+  const numEl = $('timerNum');
+  if (numEl) numEl.textContent = '⏸️';
+  openModal(`
+    <div class="modal-icon no-print">⏸️</div>
+    <h2 class="modal-title no-print">تم إيقاف المؤقت!</h2>
+    <p class="modal-text no-print">تم تجميد المؤقت لهذا السؤال فقط. خذ كامل وقتك للتفكير واختيار الإجابة الصحيحة براحة وهدوء.</p>
+    <button class="btn-action btn-gold no-print" onclick="closeModal()">متابعة التفكير</button>
+  `);
+}
+
+function useFazaaBomb() {
+  if (lifelinesUsed.bomb || isAnswered || !currentQuestions || !currentQuestions[curQIndex]) return;
+  lifelinesUsed.bomb = true;
+  updateLifelinesUI();
+  playBombSound();
+
+  const correctIdx = currentQuestions[curQIndex].c;
+  const btns = getAnswerButtons();
+
+  const gameSec = $('game');
+  if (gameSec) {
+    gameSec.style.animation = 'shake 0.6s ease-in-out';
+    setTimeout(() => { if (gameSec) gameSec.style.animation = ''; }, 650);
+  }
+
+  btns.forEach((b, idx) => {
+    if (idx !== correctIdx) {
+      b.classList.add('bomb-smoke');
+      setTimeout(() => {
+        b.classList.add('gone');
+        b.disabled = true;
+      }, 500);
+    }
+  });
+
+  setTimeout(() => {
+    handleAnswer(correctIdx);
+  }, 750);
+}
+
+/* =====================================================================
+   GAME OVER / CERTIFICATE ENGINE
+   ===================================================================== */
+function handleGameOver(won, prizePoints) {
+  clearInterval(timerInterval);
+
+  // حساب الوقت المستغرق
+  const elapsedTotalSeconds = Math.floor((Date.now() - lessonStartTime) / 1000);
+  const minutes = Math.floor(elapsedTotalSeconds / 60);
+  const seconds = elapsedTotalSeconds % 60;
+  const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+  const studentName = $('studentName').value.trim();
+  const studentClass = $('studentClass').value.trim() || 'الصف السادس الابتدائي';
+  const isGirl = isFeminine(studentName);
+  const bank = lessonBanks[currentLessonKey];
+
+  if (won) {
+    playFanfareSound();
+
+    // Register lesson completion in session list
+    const existingIdx = sessionCompletedLessons.findIndex(item => item.lessonKey === currentLessonKey);
+    const entry = {
+      lessonKey: currentLessonKey,
+      lessonTitle: bank.lessonTitle,
+      unitTitle: bank.unitTitle,
+      points: prizePoints,
+      date: new Date().toLocaleDateString('ar-SA'),
+      time: formattedTime,
+      level: gameLevel === 'advanced' ? 'متقدم ⚡' : 'مبتدئ 🌱'
+    };
+
+    if (existingIdx >= 0) {
+      sessionCompletedLessons[existingIdx] = entry;
+    } else {
+      sessionCompletedLessons.push(entry);
+    }
+    updatePrevCertBox();
+    saveCurrentAppState();
+    
+    // Add Next Stage button to the main screen UI below questions
+    const nextStageContainer = $('nextStageContainer');
+    if (bank.nextLessonKey && lessonBanks[bank.nextLessonKey] && lessonBanks[bank.nextLessonKey].questions.length > 0) {
+      nextStageContainer.innerHTML = `
+        <button class="btn-action btn-success no-print" style="font-size: 22px; padding: 12px 40px; border-radius:15px; box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);" onclick="goToNextLesson('${bank.nextLessonKey}')">
+          ▶ المرحلة التالية
+        </button>
+      `;
+      nextStageContainer.classList.remove('hidden');
+    }
+  }
+
+  // Build the Certificate Elements Ready for Print
+  preparePrintCertificate(won, prizePoints, studentName, studentClass, isGirl, bank);
+
+  // Build Action Buttons for the Modal
+  let actionButtonsHtml = ``;
+
+  if (won) {
+    actionButtonsHtml += `
+      <button class="btn-action btn-print" onclick="triggerPrint()">
+        🖨️ طباعة الشهادة
+      </button>
+      <button class="btn-action btn-outline" onclick="previewCertificateModal()">
+        👁️ معاينة الشهادة
+      </button>
+    `;
+
+    let next = bank.nextLessonKey;
+    if (next && lessonBanks[next] && lessonBanks[next].questions && lessonBanks[next].questions.length > 0) {
+      actionButtonsHtml += `
+        <button class="btn-action btn-success" onclick="goToNextLesson('${next}')">
+          ▶ الدرس التالي
+        </button>
+      `;
+    }
+
+    actionButtonsHtml += `
+      <button class="btn-action btn-gold" onclick="exitToMainMenu()">
+        🏠 القائمة الرئيسية
+      </button>
+    `;
+  } else {
+    actionButtonsHtml += `
+      <button class="btn-action btn-gold" onclick="restartLesson()">
+        🔄 إعادة المحاولة
+      </button>
+    `;
+
+    if (sessionCompletedLessons.length > 0) {
+      actionButtonsHtml += `
+        <button class="btn-action btn-print" onclick="showSavedCertificate()">
+          🖨️ طباعة شهادة إنجازاتي السابقة
+        </button>
+      `;
+    }
+
+    actionButtonsHtml += `
+      <button class="btn-action btn-outline" onclick="exitToMainMenu()">
+        🏠 القائمة الرئيسية
+      </button>
+    `;
+  }
+
+  // Display Result Modal
+  const modalIcon = won ? '🏆' : '😔';
+  let topMsg = '';
+  if (!won) {
+     let failTitleMsg = isGirl ? 'لا بأس، راجعي دروسك وحاولي مرة أخرى لتطبعي شهادتك.' : 'لا بأس، راجع دروسك وحاول مرة أخرى لتطبع شهادتك.';
+     let failDescMsg = isGirl ? 'حاولي مرة أخرى لاجتياز هذا الدرس. نتيجتك الحالية:' : 'حاول مرة أخرى لاجتياز هذا الدرس. نتيجتك الحالية:';
+     
+     topMsg = `
+       <h2 class="game-over-title" style="color:var(--danger); margin:0 0 10px 0;">انتهت اللعبة في هذه المحاولة 😔</h2>
+       <p class="game-over-desc" style="color:var(--text-muted); margin-bottom:15px; font-size:18px;">${failDescMsg} ${prizePoints} نقطة<br><br>${failTitleMsg}</p>
+     `;
+  } else {
+     let successTitleMsg = isGirl ? 'أحسنتِ صنعاً! تتوج هذه الشهادة مبرمجة المستقبل:' : 'أحسنت صنعاً! تتوج هذه الشهادة مبرمج المستقبل:';
+     
+     topMsg = `
+       <div class="big">🏆</div>
+       <h2 class="game-over-title" style="color:var(--primary-gold);">شهادة تفوق ونجاح!</h2>
+       <p class="game-over-desc" style="color:var(--text-main); font-size:18px;">${successTitleMsg}</p>
+       <p class="game-over-title" style="color:var(--neon-cyan);font-size:32px; font-weight:bold; margin:15px 0; text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);">${studentName}</p>
+     `;
+  }
+
+  openModal(`
+    <div style="padding: 10px; max-height: 85vh; overflow-y: auto;">
+        <div class="no-print">
+            ${topMsg}
+        </div>
+        <div class="modal-actions no-print" style="margin-top:24px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+            ${actionButtonsHtml}
+        </div>
+    </div>
+  `);
+}
+
+/* =====================================================================
+   PREPARE CERTIFICATE DATA
+   ===================================================================== */
+function preparePrintCertificate(won, prizePoints, studentName, studentClass, isGirl, bank) {
+  const teacherNameInput = ($('teacherName')?.value || '').trim();
+  const teacherCityInput = ($('teacherCity')?.value || '').trim();
+  const teacherSchoolInput = ($('teacherSchool')?.value || '').trim();
+
+  // حساب النقاط التراكمية
+  let totalPoints = 0;
+  if (sessionCompletedLessons.length > 0) {
+    totalPoints = sessionCompletedLessons.reduce((sum, lesson) => sum + parseInt(lesson.points.replace(/,/g, '')), 0);
+  } else {
+    totalPoints = parseInt(prizePoints.replace(/,/g, ''));
+  }
+  const totalPointsFormatted = totalPoints.toLocaleString('en-US');
+
+  // Admin / City Header
+  const printAdmin = $('printAdminCity');
+  if (printAdmin) {
+    if (teacherCityInput) {
+      printAdmin.textContent = `الإدارة العامة للتعليم بـ ${teacherCityInput}`;
+    } else {
+      printAdmin.textContent = `الإدارة العامة للتعليم`;
+    }
+  }
+
+  // School Name (Auto prepends "مدرسة " if not present and not blank)
+  const printSchool = $('printSchoolName');
+  if (printSchool) {
+    if (teacherSchoolInput) {
+      if (!/^مدرس[ةه]/i.test(teacherSchoolInput)) {
+        printSchool.textContent = `مدرسة ${teacherSchoolInput}`;
+      } else {
+        printSchool.textContent = teacherSchoolInput;
+      }
+    } else {
+      printSchool.textContent = '';
+    }
+  }
+
+  // Date
+  const printDate = $('printDate');
+  if (printDate) {
+    printDate.textContent = `التاريخ: ${new Date().toLocaleDateString('ar-SA')}`;
+  }
+
+  // Student details
+  const printStudentName = $('printStudentName');
+  if (printStudentName) {
+    printStudentName.textContent = studentName || 'طالب المستقبل';
+  }
+  const printStudentClass = $('printStudentClass');
+  if (printStudentClass) {
+    printStudentClass.textContent = studentClass || 'الصف السادس الابتدائي';
+  }
+
+  // Teacher signature label according to teacher gender
+  const isTeacherGirl = isFeminine(teacherNameInput);
+  const printTeacherTitle = $('printTeacherTitle');
+  if (printTeacherTitle) {
+    printTeacherTitle.textContent = isTeacherGirl ? 'معلمة المادة:' : 'معلم المادة:';
+  }
+  
+  // Principal label dynamic
+  const printPrincipalTitle = $('printPrincipalTitle');
+  if (printPrincipalTitle) {
+    printPrincipalTitle.textContent = (isGirl || isTeacherGirl) ? 'قائدة المدرسة:' : 'قائد المدرسة:';
+  }
+  
+  // Intro text according to student & teacher gender
+  const printAwardIntro = $('printAwardIntro');
+  if (printAwardIntro) {
+    const teacherWord = isTeacherGirl ? 'ومُعَلِّمَةُ' : 'ومُعَلِّمُ';
+    printAwardIntro.textContent = isGirl
+      ? `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبةَ المبدعة:`
+      : `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبَ المبدع:`;
+  }
+
+  // Body text
+  const printAwardBody = $('printAwardBody');
+  if (printAwardBody) {
+    printAwardBody.textContent = isGirl
+      ? `قد اجتازت بتفوق وجدارة مراجعة المهارات الرقمية وحصلت على ${totalPointsFormatted} نقطة نظير تميزها وإتقانها لمفاهيم المنهج.`
+      : `قد اجتاز بتفوق وجدارة مراجعة المهارات الرقمية وحصل على ${totalPointsFormatted} نقطة نظير تميزه وإتقانه لمفاهيم المنهج.`;
+  }
+
+  const printTeacherName = $('printTeacherName');
+  if (printTeacherName) {
+    printTeacherName.textContent = teacherNameInput || '________________';
+  }
+
+  // تحديث الختم بالقيمة التراكمية في الشهادة الأصلية (الخاصة بالطباعة)
+  const certStamps = document.querySelectorAll('.cert-stamp');
+  certStamps.forEach(stamp => {
+    stamp.innerHTML = `ختم التميز<br>${totalPointsFormatted}`;
+  });
+
+  // Render Table of Passed Lessons in Certificate
+  const tableWrapper = $('printLessonsTableWrapper');
+  if (tableWrapper) {
+    if (sessionCompletedLessons.length > 0) {
+      tableWrapper.innerHTML = `
+        <div style="margin-top: 10px; font-weight: 700; font-size: 15px; color: #92400e; text-align: right;">
+          سِجِلُّ الإنجازاتِ المجتازةِ في مادةِ المهاراتِ الرقمية:
+        </div>
+        <table class="cert-lessons-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>الدرس</th>
+              <th>المستوى</th>
+              <th>الوقت</th>
+              <th>النقاط</th>
+              <th>التاريخ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sessionCompletedLessons.map((item, idx) => `
+              <tr>
+                <td>${idx + 1}</td>
+                <td>${item.unitTitle} - ${item.lessonTitle}</td>
+                <td style="font-weight: bold; color: ${item.level.includes('متقدم') ? '#10b981' : '#64748b'};">${item.level}</td>
+                <td dir="ltr" style="font-weight: bold;">${item.time}</td>
+                <td style="font-weight: 900; color: #92400e;">${item.points}</td>
+                <td>${item.date}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    } else {
+      tableWrapper.innerHTML = '';
+    }
+  }
+}
+
+/* =====================================================================
+   PRINT TRIGGER
+   ===================================================================== */
+function triggerPrint() {
+  playSelectSound();
+  window.print();
+}
+
+function previewCertificateModal() {
+  playSelectSound();
+  const printElem = $('printableCertificate');
+  if (!printElem) return;
+
+  const bank = lessonBanks[currentLessonKey];
+  let nextBtnHtml = '';
+  if (bank && bank.nextLessonKey && lessonBanks[bank.nextLessonKey] && lessonBanks[bank.nextLessonKey].questions.length > 0) {
+    nextBtnHtml = `
+      <button class="btn-action btn-success no-print" onclick="goToNextLesson('${bank.nextLessonKey}')">
+        ▶ الدرس التالي
+      </button>
+    `;
+  }
+
+  openModal(`
+    <div style="padding: 10px; max-height: 85vh; overflow-y: auto;">
+        <h2 class="modal-title no-print">معاينة الشهادة المعتمدة</h2>
+        <div class="cert-preview-card no-print">
+          ${printElem.innerHTML}
+        </div>
+        <div class="actions-cluster no-print" style="margin-top:24px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+          <button class="btn-action btn-print" onclick="triggerPrint()">
+            🖨️ طباعة الشهادة الآن
+          </button>
+          ${nextBtnHtml}
+          <button class="btn-action btn-gold" onclick="exitToMainMenu()">
+            🏠 القائمة الرئيسية
+          </button>
+          <button class="btn-action btn-outline" onclick="closeModal()">
+            ❌ إغلاق والعودة للدرس
+          </button>
+        </div>
+    </div>
+  `);
+}
+
+function showSavedCertificate() {
+  playSelectSound();
+  
+  // نظام الذكاء التلقائي: تصفير الشهادة إذا تغير اسم اللاعب عند عرض الشهادة السابقة
+  const studentName = ($('studentName')?.value || '').trim();
+  try {
+    const localHist = localStorage.getItem('whowants_history_v3');
+    if (localHist) {
+      const state = JSON.parse(localHist);
+      if (state.studentName && state.studentName !== studentName && studentName !== '') {
+        alert("لقد قمت بتغيير اسم اللاعب، لا يمكن عرض شهادة سابقة بهذا الاسم. يرجى لعب درس واحد على الأقل لإنشاء شهادة جديدة.");
+        sessionCompletedLessons = []; // اسم جديد يعني لاعب جديد
+        updatePrevCertBox();
+        return;
+      }
+    }
+  } catch(e) {}
+  
+  const studentClass = ($('studentClass')?.value || '').trim() || 'الصف السادس الابتدائي';
+  const nameToUse = studentName || 'طالب المستقبل';
+  const isGirl = isFeminine(nameToUse);
+  const bank = lessonBanks[currentLessonKey] || lessonBanks['1.1'];
+
+  preparePrintCertificate(true, '1,000,000', nameToUse, studentClass, isGirl, bank);
+  
+  const printElem = $('printableCertificate');
+  if (!printElem) return;
+
+  openModal(`
+    <div style="padding: 10px; max-height: 85vh; overflow-y: auto;">
+        <h2 class="modal-title no-print">معاينة الشهادة المعتمدة</h2>
+        <div class="cert-preview-card no-print">
+          ${printElem.innerHTML}
+        </div>
+        <div class="actions-cluster no-print" style="margin-top:24px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
+          <button class="btn-action btn-print" onclick="triggerPrint()">
+            🖨️ طباعة الشهادة الآن
+          </button>
+          <button class="btn-action btn-gold" onclick="closeModal()">
+            ❌ إغلاق
+          </button>
+        </div>
+    </div>
+  `);
+}
+
+/* =====================================================================
+   NAVIGATION & CONTROL HELPERS
+   ===================================================================== */
+function goToNextLesson(nextKey) {
+  playSelectSound();
+  closeModal();
+  selectLesson(nextKey);
+}
+
+function confirmExitGame() {
+  playSelectSound();
+  openModal(`
+    <div class="no-print">
+      <div class="modal-icon">🏠</div>
+      <h2 class="modal-title">العودة لقائمة الدروس</h2>
+      <p class="modal-text">هل تريد بالتأكيد مغادرة جلسة اللعب الحالية والعودة لشاشة اختيار الدروس؟</p>
+      <div class="actions-cluster">
+        <button class="btn-action btn-gold" onclick="exitToMainMenu()">
+          نعم، العودة للرئيسية
+        </button>
+        <button class="btn-action btn-outline" onclick="closeModal()">
+          إلغاء ومتابعة اللعب
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+function exitApplication() {
+  playSelectSound();
+  openModal(`
+    <div class="no-print">
+      <div class="modal-icon">🚪</div>
+      <h2 class="modal-title">خروج من اللعبة</h2>
+      <p class="modal-text">هل أنت متأكد أنك تريد الخروج من اللعبة نهائياً؟</p>
+      <div class="actions-cluster">
+        <button class="btn-action btn-danger-outline" style="background:var(--danger); color:#fff !important;" onclick="window.close(); document.body.innerHTML='<div style=\\'display:flex; height:100vh; align-items:center; justify-content:center; flex-direction:column;\\'><h1 class=\\'title-gold\\'>إلى اللقاء!</h1><p style=\\'color:var(--text-muted)\\'>تم إغلاق اللعبة بنجاح.</p></div>';">نعم، خروج</button>
+        <button class="btn-action btn-outline" onclick="closeModal()">إلغاء</button>
+      </div>
+    </div>
+  `);
+}
+
+function exitToMainMenu() {
+  clearInterval(timerInterval);
+  closeModal();
+  
+  const startExit = $('startExitBtn');
+  if(startExit) startExit.classList.remove('hidden');
+  
+  $('game').classList.add('hidden');
+  $('start').classList.remove('hidden');
+  updatePrevCertBox();
+  playSelectSound();
+}
+
+function confirmRestartLesson() {
+  playSelectSound();
+  openModal(`
+    <div class="no-print">
+      <div class="modal-icon">🔄</div>
+      <h2 class="modal-title">إعادة محاولة الدرس</h2>
+      <p class="modal-text">هل تريد بدء أسئلة هذا الدرس من البداية وتجديد وسائل المساعدة؟</p>
+      <div class="actions-cluster">
+        <button class="btn-action btn-gold" onclick="restartLesson()">
+          نعم، أعد الدرس
+        </button>
+        <button class="btn-action btn-outline" onclick="closeModal()">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  `);
+}
+
+/* =====================================================================
+   GENERIC MODAL HELPERS
+   ===================================================================== */
+function openModal(htmlContent) {
+  const modalBox = $('modalBox');
+  const modalOverlay = $('gameModal');
+  if (modalBox && modalOverlay) {
+    modalBox.innerHTML = htmlContent;
+    modalOverlay.classList.remove('hidden');
+  }
+}
+
+function closeModal() {
+  const modalOverlay = $('gameModal');
+  if (modalOverlay) {
+    modalOverlay.classList.add('hidden');
+  }
+  playSelectSound();
+}
+</script>
+</body>
+</html>
