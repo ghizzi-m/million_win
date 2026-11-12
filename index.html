@@ -1008,7 +1008,7 @@ body::before {
 }
 
 /* ===============================
-   CERTIFICATE SHEET DESIGN
+   CERTIFICATE SHEET DESIGN (Preview Modal Styling)
 ================================ */
 #printableCertificate {
   display: none; 
@@ -1016,20 +1016,35 @@ body::before {
 
 /* When viewing in modal preview */
 .cert-preview-card {
-  background: #fffdf9;
-  color: #0c182a;
-  border: 4px double #b8860b;
-  border-radius: 14px;
-  padding: 24px;
   position: relative;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
   max-height: 70vh;
   overflow-y: auto;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: 12px;
 }
 
-.cert-preview-card * {
+.cert-page {
+  margin-bottom: 24px;
+}
+.cert-page:last-child {
+  margin-bottom: 0;
+}
+
+.cert-inner-wrapper {
+  background: #fffdf9;
+  color: #0c182a;
+  border: 6px double #b8860b;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+.cert-inner-wrapper * {
   color: #0c182a;
 }
 
@@ -1053,17 +1068,6 @@ body::before {
   text-align: center;
 }
 
-.cert-header-center .emblem {
-  font-size: 38px;
-  margin-bottom: 2px;
-}
-
-.cert-header-center h2 {
-  font-size: 24px;
-  color: #92400e;
-  font-weight: 900;
-}
-
 .cert-header-left {
   text-align: left;
   font-size: 15px;
@@ -1072,11 +1076,19 @@ body::before {
 }
 
 .cert-body {
-  margin: 16px 0;
   line-height: 1.8;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+}
+
+.emblem {
+  font-size: 38px;
+  margin-bottom: 2px;
+}
+
+.cert-main-title {
+  font-size: 24px;
+  color: #92400e;
+  font-weight: 900;
+  margin-bottom: 5px;
 }
 
 .cert-recipient-intro {
@@ -1211,10 +1223,15 @@ body::before {
 ========================================= */
 @page {
   size: A4 portrait;
-  margin: 20mm 15mm;
+  margin: 0 !important; /* إزالة هوامش المتصفح الافتراضية للتحكم الكامل */
 }
 
 @media print {
+  /* إخفاء كل شيء باستثناء الشهادة */
+  body::before, #start, #game, .modal-overlay:not(#certModal), .no-print, button, .btn-action, .social-links, .tools, .ladder-card, header, .nav-actions-row {
+    display: none !important;
+  }
+
   html, body {
     background: #ffffff !important;
     color: #000000 !important;
@@ -1223,49 +1240,45 @@ body::before {
     height: auto !important;
     min-height: auto !important;
     overflow: visible !important;
-    overflow-x: visible !important;
-    overflow-y: visible !important;
-  }
-
-  body::before,
-  #start,
-  #game,
-  .modal-overlay:not(#certModal),
-  .no-print,
-  button,
-  .btn-action,
-  .social-links,
-  .tools,
-  .ladder-card,
-  header,
-  .nav-actions-row
-  {
-    display: none !important;
   }
 
   #printableCertificate {
     display: block !important; 
     visibility: visible !important;
-    position: static !important;
+    position: relative !important;
     width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
-    background: #ffffff !important;
+  }
+
+  /* تقييد صارم للمقاسات ليمنع انكسار الصندوق للورقة الثانية */
+  .cert-page {
+    width: 100% !important;
+    height: 270mm !important; /* هذا الارتفاع آمن تماماً داخل ورقة A4 */
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: block !important;
+  }
+
+  .cert-page:last-child {
+    page-break-after: auto !important;
   }
 
   .cert-inner-wrapper {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    border: 4px solid #b8860b !important;
-    padding: 40px 30px !important;
+    height: 100% !important; /* تعبئة المساحة المتاحة فقط */
+    border: 8px double #b8860b !important;
+    border-radius: 0 !important;
+    padding: 25px !important;
     background: #fffdf9 !important;
-    height: auto !important;
-    min-height: auto !important;
     box-sizing: border-box !important;
+    overflow: hidden !important; /* منع أي امتداد خارج الإطار */
   }
 
   .cert-header-grid {
@@ -1274,12 +1287,14 @@ body::before {
     border-bottom: 2px solid #b8860b !important;
     padding-bottom: 15px !important; 
     margin-bottom: 30px !important; 
-    page-break-inside: avoid !important;
+    flex-shrink: 0 !important;
   }
 
   .cert-body {
-    display: block !important;
-    text-align: center !important;
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
 
   #printableCertificate * {
@@ -1311,20 +1326,20 @@ body::before {
   }
 
   .cert-lessons-table {
-    margin: 30px auto !important;
+    margin: 15px auto !important;
     width: 100% !important;
     font-size: 16px !important;
-    page-break-inside: auto !important;
     border-collapse: collapse !important;
+    table-layout: fixed !important;
+  }
+
+  .cert-lessons-table th, .cert-lessons-table td {
+    padding: 8px !important;
+    border: 1px solid #cbd5e1 !important;
   }
 
   .cert-lessons-table tr {
     page-break-inside: avoid !important;
-    page-break-after: auto !important;
-  }
-
-  .cert-lessons-table thead {
-    display: table-header-group !important;
   }
 
   .cert-lessons-table th {
@@ -1337,8 +1352,8 @@ body::before {
   .cert-footer-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr 1fr !important;
-    margin-top: 40px !important;
-    page-break-inside: avoid !important;
+    margin-top: 20px !important;
+    flex-shrink: 0 !important;
   }
   
   .cert-signature-box {
@@ -1633,64 +1648,7 @@ body::before {
      (Used for window.print() output)
 ================================ -->
 <div id="printableCertificate">
-  <div class="cert-inner-wrapper">
-    <div class="cert-header-grid">
-      <div class="cert-header-right">
-        <div>المملكة العربية السعودية</div>
-        <div>وزارة التعليم</div>
-        <div id="printAdminCity">الإدارة العامة للتعليم</div>
-      </div>
-      <div class="cert-header-center">
-        <!-- Title left empty for print view to avoid overlapping/duplication -->
-      </div>
-      <div class="cert-header-left">
-        <div id="printSchoolName">مدرسة المهارات الرقمية</div>
-        <div>المادة: المهارات الرقمية</div>
-        <div id="printDate">التاريخ: 1448 هـ</div>
-      </div>
-    </div>
-
-    <div class="cert-body">
-      <div class="emblem" style="font-size: 38px; margin-bottom: 2px;">🏆</div>
-      <h2 class="cert-main-title">شهادة تفوق ونجاح</h2>
-      <div style="font-size: 15px; font-weight: 700; color: #475569; margin-bottom: 20px;">مسابقة من يربح المليون التعليمية</div>
-
-      <p class="cert-recipient-intro" id="printAwardIntro">
-        تَشْهَدُ إدارةُ المدرسةِ ومُعَلِّمُ المادةِ بأنّ:
-      </p>
-
-      <div class="cert-student-name" id="printStudentName">
-        اسم الطالب
-      </div>
-
-      <div class="cert-class-tag" id="printStudentClass">
-        الصف السادس الابتدائي
-      </div>
-
-      <p class="cert-details-text" id="printAwardBody">
-        قد اجتاز بتفوق وجدارة مراجعة المهارات الرقمية.
-      </p>
-
-      <!-- Cumulative Completed Lessons List -->
-      <div id="printLessonsTableWrapper" style="width: 100%;">
-        <!-- Injected if multiple lessons passed -->
-      </div>
-    </div>
-
-    <div class="cert-footer-grid">
-      <div class="cert-signature-box">
-        <div id="printTeacherTitle">معلم المادة:</div>
-        <div id="printTeacherName" style="color: #92400e; font-size: 18px; margin-top: 4px;">الاسم</div>
-      </div>
-      <div class="cert-signature-box">
-        <div class="cert-stamp">ختم التميز<br>1,000,000</div>
-      </div>
-      <div class="cert-signature-box">
-        <div id="printPrincipalTitle" style="color: #475569; font-size: 18px;">قائد المدرسة:</div>
-        <div style="min-height: 25px;"></div> 
-      </div>
-    </div>
-  </div>
+  <!-- يتم حقن صفحات الشهادة ديناميكياً هنا عن طريق الجافاسكريبت لتكوين صفحات متعددة -->
 </div>
 
 <script>
@@ -2289,7 +2247,8 @@ $('studentName').addEventListener('input', function() {
     if (localHist) {
       const state = JSON.parse(localHist);
       if (state.studentName && state.studentName !== currentName && currentName !== '') {
-         // Name differs from saved history, hide certificate until they play a lesson
+         // Name differs from saved history, reset current memory and hide cert
+         sessionCompletedLessons = [];
          $('prevCertBox').classList.add('hidden');
       } else if (sessionCompletedLessons.length > 0) {
          // Name matches or is empty, show certificate if they have lessons
@@ -2357,8 +2316,7 @@ function setLevel(lvl) {
 }
 
 function handleSocialClick(e, name) {
-  // Links are now handled natively via standard anchor href target="_blank"
-  // so no need to stop propagation unless it's a generic popup
+  // Links are handled natively via href attribute and target="_blank"
   if(name === 'تواصل') {
      e.preventDefault();
   }
@@ -2895,7 +2853,7 @@ function handleGameOver(won, prizePoints) {
   }
 
   // Build the Certificate Elements Ready for Print
-  preparePrintCertificate(won, prizePoints, studentName, studentClass, isGirl, bank);
+  preparePrintCertificate(studentName, studentClass, isGirl);
 
   // Build Action Buttons for the Modal
   let actionButtonsHtml = ``;
@@ -2981,9 +2939,12 @@ function handleGameOver(won, prizePoints) {
 }
 
 /* =====================================================================
-   PREPARE CERTIFICATE DATA
+   PREPARE CERTIFICATE DATA (Pagination System)
    ===================================================================== */
-function preparePrintCertificate(won, prizePoints, studentName, studentClass, isGirl, bank) {
+function preparePrintCertificate(studentName, studentClass, isGirl) {
+  const certContainer = document.getElementById('printableCertificate');
+  if (!certContainer) return;
+
   const teacherNameInput = ($('teacherName')?.value || '').trim();
   const teacherCityInput = ($('teacherCity')?.value || '').trim();
   const teacherSchoolInput = ($('teacherSchool')?.value || '').trim();
@@ -2992,129 +2953,145 @@ function preparePrintCertificate(won, prizePoints, studentName, studentClass, is
   let totalPoints = 0;
   if (sessionCompletedLessons.length > 0) {
     totalPoints = sessionCompletedLessons.reduce((sum, lesson) => sum + parseInt(lesson.points.replace(/,/g, '')), 0);
-  } else {
-    totalPoints = parseInt(prizePoints.replace(/,/g, ''));
   }
   const totalPointsFormatted = totalPoints.toLocaleString('en-US');
 
-  // Admin / City Header
-  const printAdmin = $('printAdminCity');
-  if (printAdmin) {
-    if (teacherCityInput) {
-      printAdmin.textContent = `الإدارة العامة للتعليم بـ ${teacherCityInput}`;
-    } else {
-      printAdmin.textContent = `الإدارة العامة للتعليم`;
-    }
+  // تحضير النصوص الثابتة
+  const adminText = teacherCityInput ? `الإدارة العامة للتعليم بـ ${teacherCityInput}` : `الإدارة العامة للتعليم`;
+  let schoolText = '';
+  if (teacherSchoolInput) {
+    schoolText = /^مدرس[ةه]/i.test(teacherSchoolInput) ? teacherSchoolInput : `مدرسة ${teacherSchoolInput}`;
   }
 
-  // School Name (Auto prepends "مدرسة " if not present and not blank)
-  const printSchool = $('printSchoolName');
-  if (printSchool) {
-    if (teacherSchoolInput) {
-      if (!/^مدرس[ةه]/i.test(teacherSchoolInput)) {
-        printSchool.textContent = `مدرسة ${teacherSchoolInput}`;
-      } else {
-        printSchool.textContent = teacherSchoolInput;
-      }
-    } else {
-      printSchool.textContent = '';
-    }
-  }
+  const dateText = `التاريخ: ${new Date().toLocaleDateString('ar-SA')}`;
+  const safeStudentName = studentName || 'طالب المستقبل';
+  const safeStudentClass = studentClass || 'الصف السادس الابتدائي';
 
-  // Date
-  const printDate = $('printDate');
-  if (printDate) {
-    printDate.textContent = `التاريخ: ${new Date().toLocaleDateString('ar-SA')}`;
-  }
-
-  // Student details
-  const printStudentName = $('printStudentName');
-  if (printStudentName) {
-    printStudentName.textContent = studentName || 'طالب المستقبل';
-  }
-  const printStudentClass = $('printStudentClass');
-  if (printStudentClass) {
-    printStudentClass.textContent = studentClass || 'الصف السادس الابتدائي';
-  }
-
-  // Teacher signature label according to teacher gender
   const isTeacherGirl = isFeminine(teacherNameInput);
-  const printTeacherTitle = $('printTeacherTitle');
-  if (printTeacherTitle) {
-    printTeacherTitle.textContent = isTeacherGirl ? 'معلمة المادة:' : 'معلم المادة:';
+  const teacherTitle = isTeacherGirl ? 'معلمة المادة:' : 'معلم المادة:';
+  const principalTitle = (isGirl || isTeacherGirl) ? 'قائدة المدرسة:' : 'قائد المدرسة:';
+  
+  const teacherWord = isTeacherGirl ? 'ومُعَلِّمَةُ' : 'ومُعَلِّمُ';
+  const introText = isGirl
+    ? `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبةَ المبدعة:`
+    : `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبَ المبدع:`;
+
+  const bodyText = isGirl
+    ? `قد اجتازت بتفوق وجدارة مراجعة المهارات الرقمية وحصلت على مجموع ${totalPointsFormatted} نقطة نظير تميزها وإتقانها لمفاهيم المنهج.`
+    : `قد اجتاز بتفوق وجدارة مراجعة المهارات الرقمية وحصل على مجموع ${totalPointsFormatted} نقطة نظير تميزه وإتقانه لمفاهيم المنهج.`;
+
+  const safeTeacherName = teacherNameInput || '________________';
+
+  certContainer.innerHTML = '';
+
+  // --- بناء الصفحة الأولى: الشهادة الرئيسية ---
+  const page1Html = `
+    <div class="cert-page">
+      <div class="cert-inner-wrapper">
+        <div class="cert-header-grid">
+          <div class="cert-header-right">
+            <div>المملكة العربية السعودية</div>
+            <div>وزارة التعليم</div>
+            <div>${adminText}</div>
+          </div>
+          <div class="cert-header-center"></div>
+          <div class="cert-header-left">
+            <div>${schoolText}</div>
+            <div>المادة: المهارات الرقمية</div>
+            <div>${dateText}</div>
+          </div>
+        </div>
+
+        <div class="cert-body" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div class="emblem" style="font-size: 38px; margin-bottom: 2px;">🏆</div>
+          <h2 class="cert-main-title">شهادة تفوق ونجاح</h2>
+          <div style="font-size: 15px; font-weight: 700; color: #475569; margin-bottom: 20px;">مسابقة من يربح المليون التعليمية</div>
+
+          <p class="cert-recipient-intro">${introText}</p>
+          <div class="cert-student-name">${safeStudentName}</div>
+          <div class="cert-class-tag">${safeStudentClass}</div>
+          <p class="cert-details-text">${bodyText}</p>
+        </div>
+
+        <div class="cert-footer-grid">
+          <div class="cert-signature-box">
+            <div>${teacherTitle}</div>
+            <div style="color: #92400e; font-size: 18px; margin-top: 4px;">${safeTeacherName}</div>
+          </div>
+          <div class="cert-signature-box">
+            <div class="cert-stamp">ختم التميز<br>${totalPointsFormatted}</div>
+          </div>
+          <div class="cert-signature-box">
+            <div style="color: #475569; font-size: 18px;">${principalTitle}</div>
+            <div style="min-height: 25px;"></div> 
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // --- بناء الصفحة الثانية وما بعدها: سجل الإنجازات ---
+  let pagesHtml = '';
+  const lessonsToRender = sessionCompletedLessons;
+  const CHUNK_SIZE = 12; // عدد ملائم جداً لصفحة A4
+  const chunks = [];
+  
+  for (let i = 0; i < lessonsToRender.length; i += CHUNK_SIZE) {
+      chunks.push(lessonsToRender.slice(i, i + CHUNK_SIZE));
   }
   
-  // Principal label dynamic
-  const printPrincipalTitle = $('printPrincipalTitle');
-  if (printPrincipalTitle) {
-    printPrincipalTitle.textContent = (isGirl || isTeacherGirl) ? 'قائدة المدرسة:' : 'قائد المدرسة:';
-  }
-  
-  // Intro text according to student & teacher gender
-  const printAwardIntro = $('printAwardIntro');
-  if (printAwardIntro) {
-    const teacherWord = isTeacherGirl ? 'ومُعَلِّمَةُ' : 'ومُعَلِّمُ';
-    printAwardIntro.textContent = isGirl
-      ? `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبةَ المبدعة:`
-      : `تَشْهَدُ إدارةُ المدرسةِ ${teacherWord} المادةِ بأنّ الطالبَ المبدع:`;
-  }
-
-  // Body text
-  const printAwardBody = $('printAwardBody');
-  if (printAwardBody) {
-    printAwardBody.textContent = isGirl
-      ? `قد اجتازت بتفوق وجدارة مراجعة المهارات الرقمية وحصلت على ${totalPointsFormatted} نقطة نظير تميزها وإتقانها لمفاهيم المنهج.`
-      : `قد اجتاز بتفوق وجدارة مراجعة المهارات الرقمية وحصل على ${totalPointsFormatted} نقطة نظير تميزه وإتقانه لمفاهيم المنهج.`;
-  }
-
-  const printTeacherName = $('printTeacherName');
-  if (printTeacherName) {
-    printTeacherName.textContent = teacherNameInput || '________________';
-  }
-
-  // تحديث الختم بالقيمة التراكمية في الشهادة الأصلية (الخاصة بالطباعة)
-  const certStamps = document.querySelectorAll('.cert-stamp');
-  certStamps.forEach(stamp => {
-    stamp.innerHTML = `ختم التميز<br>${totalPointsFormatted}`;
+  chunks.forEach((chunk, pageIndex) => {
+    pagesHtml += `
+      <div class="cert-page">
+        <div class="cert-inner-wrapper">
+          <div class="cert-header-grid">
+            <div class="cert-header-right">
+              <div>المملكة العربية السعودية</div>
+              <div>وزارة التعليم</div>
+              <div>${adminText}</div>
+            </div>
+            <div class="cert-header-center"></div>
+            <div class="cert-header-left">
+              <div>${schoolText}</div>
+              <div>المادة: المهارات الرقمية</div>
+              <div>${dateText}</div>
+            </div>
+          </div>
+          
+          <div class="cert-body" style="padding-top: 10px;">
+            <h2 class="cert-main-title" style="font-size: 22px; margin-bottom: 20px;">سِجِلُّ الإنجازاتِ المجتازةِ ${(chunks.length > 1 ? `(صفحة ${pageIndex + 1})` : '')}</h2>
+            <div style="font-size: 17px; font-weight: 700; color: #334155; margin-bottom: 12px;">اسم الطالب: ${safeStudentName}</div>
+            
+            <table class="cert-lessons-table">
+              <thead>
+                <tr>
+                  <th style="width: 6%;">#</th>
+                  <th style="width: 60%; text-align: right; padding-right: 15px;">الوحدة والدرس</th>
+                  <th style="width: 12%;">المستوى</th>
+                  <th style="width: 10%;">الوقت</th>
+                  <th style="width: 12%;">النقاط</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${chunk.map((item, idx) => `
+                  <tr>
+                    <td>${(pageIndex * CHUNK_SIZE) + idx + 1}</td>
+                    <td style="text-align: right; padding-right: 15px;">${item.unitTitle} - ${item.lessonTitle}</td>
+                    <td style="font-weight: bold; color: ${item.level.includes('متقدم') ? '#10b981' : '#64748b'};">${item.level}</td>
+                    <td dir="ltr" style="font-weight: bold;">${item.time}</td>
+                    <td style="font-weight: 900; color: #92400e;">${item.points}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
   });
 
-  // Render Table of Passed Lessons in Certificate
-  const tableWrapper = $('printLessonsTableWrapper');
-  if (tableWrapper) {
-    if (sessionCompletedLessons.length > 0) {
-      tableWrapper.innerHTML = `
-        <div style="margin-top: 10px; font-weight: 700; font-size: 15px; color: #92400e; text-align: right;">
-          سِجِلُّ الإنجازاتِ المجتازةِ في مادةِ المهاراتِ الرقمية:
-        </div>
-        <table class="cert-lessons-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>الدرس</th>
-              <th>المستوى</th>
-              <th>الوقت</th>
-              <th>النقاط</th>
-              <th>التاريخ</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${sessionCompletedLessons.map((item, idx) => `
-              <tr>
-                <td>${idx + 1}</td>
-                <td>${item.unitTitle} - ${item.lessonTitle}</td>
-                <td style="font-weight: bold; color: ${item.level.includes('متقدم') ? '#10b981' : '#64748b'};">${item.level}</td>
-                <td dir="ltr" style="font-weight: bold;">${item.time}</td>
-                <td style="font-weight: 900; color: #92400e;">${item.points}</td>
-                <td>${item.date}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-    } else {
-      tableWrapper.innerHTML = '';
-    }
-  }
+  // حقن الصفحات في الحاوية الرئيسية للطباعة (الصفحة الأولى ثم صفحات الجدول)
+  certContainer.innerHTML = page1Html + pagesHtml;
 }
 
 /* =====================================================================
@@ -3127,7 +3104,7 @@ function triggerPrint() {
 
 function previewCertificateModal() {
   playSelectSound();
-  const printElem = $('printableCertificate');
+  const printElem = document.getElementById('printableCertificate');
   if (!printElem) return;
 
   const bank = lessonBanks[currentLessonKey];
@@ -3143,9 +3120,11 @@ function previewCertificateModal() {
   openModal(`
     <div style="padding: 10px; max-height: 85vh; overflow-y: auto;">
         <h2 class="modal-title no-print">معاينة الشهادة المعتمدة</h2>
+        
         <div class="cert-preview-card no-print">
           ${printElem.innerHTML}
         </div>
+        
         <div class="actions-cluster no-print" style="margin-top:24px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
           <button class="btn-action btn-print" onclick="triggerPrint()">
             🖨️ طباعة الشهادة الآن
@@ -3165,7 +3144,7 @@ function previewCertificateModal() {
 function showSavedCertificate() {
   playSelectSound();
   
-  // نظام الذكاء التلقائي: تصفير الشهادة إذا تغير اسم اللاعب عند عرض الشهادة السابقة
+  // تصفير الشهادة إذا تغير اسم اللاعب عند عرض الشهادة السابقة
   const studentName = ($('studentName')?.value || '').trim();
   try {
     const localHist = localStorage.getItem('whowants_history_v3');
@@ -3173,7 +3152,7 @@ function showSavedCertificate() {
       const state = JSON.parse(localHist);
       if (state.studentName && state.studentName !== studentName && studentName !== '') {
         alert("لقد قمت بتغيير اسم اللاعب، لا يمكن عرض شهادة سابقة بهذا الاسم. يرجى لعب درس واحد على الأقل لإنشاء شهادة جديدة.");
-        sessionCompletedLessons = []; // اسم جديد يعني لاعب جديد
+        sessionCompletedLessons = []; 
         updatePrevCertBox();
         return;
       }
@@ -3183,19 +3162,20 @@ function showSavedCertificate() {
   const studentClass = ($('studentClass')?.value || '').trim() || 'الصف السادس الابتدائي';
   const nameToUse = studentName || 'طالب المستقبل';
   const isGirl = isFeminine(nameToUse);
-  const bank = lessonBanks[currentLessonKey] || lessonBanks['1.1'];
 
-  preparePrintCertificate(true, '1,000,000', nameToUse, studentClass, isGirl, bank);
+  preparePrintCertificate(nameToUse, studentClass, isGirl);
   
-  const printElem = $('printableCertificate');
+  const printElem = document.getElementById('printableCertificate');
   if (!printElem) return;
 
   openModal(`
     <div style="padding: 10px; max-height: 85vh; overflow-y: auto;">
         <h2 class="modal-title no-print">معاينة الشهادة المعتمدة</h2>
+        
         <div class="cert-preview-card no-print">
           ${printElem.innerHTML}
         </div>
+        
         <div class="actions-cluster no-print" style="margin-top:24px; display:flex; flex-wrap:wrap; justify-content:center; gap:12px;">
           <button class="btn-action btn-print" onclick="triggerPrint()">
             🖨️ طباعة الشهادة الآن
@@ -3299,6 +3279,9 @@ function closeModal() {
   const modalOverlay = $('gameModal');
   if (modalOverlay) {
     modalOverlay.classList.add('hidden');
+    // تنظيف النافذة بعد الإخفاء لتجنب التضارب
+    const modalBox = $('modalBox');
+    if (modalBox) modalBox.innerHTML = '';
   }
   playSelectSound();
 }
