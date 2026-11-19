@@ -416,7 +416,7 @@ body::before {
 }
 
 /* ===============================
-   GAME SCREEN
+   GAME SCREEN (DESKTOP DEFAULT)
 ================================ */
 #game {
   max-width: 1300px;
@@ -426,7 +426,6 @@ body::before {
   z-index: 1;
 }
 
-/* Game Header Top Bar */
 .game-top-bar {
   display: grid;
   grid-template-columns: 1.2fr 1fr 1.3fr;
@@ -439,14 +438,6 @@ body::before {
   margin-bottom: 16px;
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-}
-
-@media (max-width: 1024px) {
-  .game-top-bar {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 12px;
-  }
 }
 
 .top-bar-right {
@@ -524,12 +515,6 @@ body::before {
   gap: 14px;
 }
 
-@media (max-width: 1024px) {
-  .top-bar-left {
-    justify-content: center;
-  }
-}
-
 .lifelines-wrapper {
   display: flex;
   align-items: center;
@@ -577,7 +562,6 @@ body::before {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Timer */
 .timer-widget {
   width: 64px;
   height: 64px;
@@ -610,7 +594,6 @@ body::before {
   color: var(--text-main);
 }
 
-/* Lesson Title Ribbon */
 .lesson-ribbon {
   background: rgba(13, 21, 39, 0.95);
   border: 1px solid var(--border-gold);
@@ -623,6 +606,7 @@ body::before {
   justify-content: center;
   gap: 12px;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
 }
 
 .lesson-ribbon-title {
@@ -641,20 +625,12 @@ body::before {
   font-weight: 700;
 }
 
-/* Game Main Layout */
 .game-layout {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 24px;
 }
 
-@media (max-width: 950px) {
-  .game-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Question Box */
 .qbox-container {
   background: linear-gradient(180deg, #1e2b4d 0%, #0f172a 100%);
   border: 2px solid var(--primary-gold);
@@ -691,7 +667,6 @@ body::before {
   justify-content: center;
 }
 
-/* Answers Grid */
 .answers-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -700,12 +675,6 @@ body::before {
 
 .answers-grid.two-options {
   grid-template-columns: 1fr 1fr;
-}
-
-@media (max-width: 680px) {
-  .answers-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .ans-btn {
@@ -775,12 +744,10 @@ body::before {
   pointer-events: none;
 }
 
-/* Bomb effect explosion overlay */
 .bomb-smoke {
   animation: explodeOut 0.7s forwards ease-out;
 }
 
-/* Prize Ladder */
 .ladder-card {
   background: var(--bg-card);
   border: 1px solid var(--border-gold);
@@ -1219,6 +1186,102 @@ body::before {
 }
 
 /* =========================================
+   MOBILE RESPONSIVENESS FIX (CRUCIAL)
+========================================= */
+@media (max-width: 900px) {
+  .game-layout {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .game-top-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+  
+  /* ترتيب العناصر من الأعلى للأسفل */
+  .top-bar-right {
+    order: 1 !important; /* بيانات الطالب والأزرار */
+    width: 100% !important;
+    align-items: center !important;
+  }
+  
+  .top-bar-left {
+    order: 2 !important; /* وسائل المساعدة والمؤقت */
+    width: 100% !important;
+    justify-content: center !important;
+    flex-direction: column !important; /* وضع المؤقت فوق أزرار المساعدة */
+    gap: 14px !important;
+  }
+  
+  .top-bar-center {
+    order: 3 !important; /* عنوان اللعبة */
+    margin-top: 10px !important;
+  }
+
+  /* إجبار الأزرار على الالتفاف وعدم الخروج من الشاشة */
+  .nav-actions-row {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .lifelines-wrapper {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  /* تصغير الخطوط والعناصر قليلاً لتناسب الشاشات الصغيرة */
+  .student-greeting {
+    white-space: normal !important;
+    text-align: center !important;
+    justify-content: center !important;
+    font-size: clamp(16px, 4vw, 19px) !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .nav-btn-mini {
+    font-size: clamp(12px, 3vw, 14px) !important;
+    padding: 8px 12px !important;
+  }
+  
+  .lifeline-btn {
+    width: clamp(45px, 12vw, 55px) !important;
+    height: clamp(45px, 12vw, 55px) !important;
+    font-size: clamp(18px, 5vw, 22px) !important;
+  }
+
+  .timer-widget {
+    width: clamp(55px, 15vw, 70px) !important;
+    height: clamp(55px, 15vw, 70px) !important;
+  }
+  
+  .timer-inner {
+    font-size: clamp(18px, 5vw, 24px) !important;
+    width: calc(100% - 8px) !important;
+    height: calc(100% - 8px) !important;
+  }
+
+  .answers-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ans-btn {
+    font-size: clamp(14px, 4vw, 18px) !important;
+    padding: 14px 18px !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .ans-btn .letter-badge {
+    position: absolute;
+    right: 15px;
+  }
+}
+
+/* =========================================
    PERFECT PRINT MEDIA QUERIES (Multi-page Fix)
 ========================================= */
 @page {
@@ -1536,8 +1599,8 @@ body::before {
       <!-- Credits Box -->
       <div class="credits-box">
         <div style="font-family: inherit; color: var(--neon-blue); text-shadow: 0 0 10px rgba(41, 121, 255, 0.7); margin-bottom: 12px; font-weight: 700; line-height: 1.4;">
-          <div style="font-size: 23px;">برمجة وتصميم: غزي بن مساعد الغزي</div>
-          <div style="font-size: 21px; opacity: 0.9;">الحقوق محفوظة</div>
+          <div style="font-size: 24px;">برمجة وتصميم: غزي بن مساعد الغزي</div>
+          <div style="font-size: 22px; opacity: 0.9;">الحقوق محفوظة</div>
         </div>
         <div class="social-links">
           <a href="https://wa.me/966554455697" target="_blank" class="social-btn" title="واتساب">
@@ -2064,7 +2127,7 @@ const lessonBanks = {
       { q: `لا نستطيع رسم خلفية في سكراتش.`, a: [`صح`, `خطأ`], c: 1 },
       { q: `اتخاذ القرار هو تحديد ما سيحدث إذا كان الشرط صحيحا أو خطأ.`, a: [`صح`, `خطأ`], c: 0 },
       { q: `تستخدم عملية اتخاذ القرار في البرمجة لترتيب تنفيذ الأوامر.`, a: [`صح`, `خطأ`], c: 0 },
-      { q: `من لبنات اتخاذ القرار لبنة ( إذا () وإلا ).`, a: [`صح`, `خطأ`], c: 1 },
+      { q: `من لبنات اتخاذ القرار لبنة ( إذا () وإلا ).`, a: [`صح`, `خطأ`], c: 0 },
       { q: `توجد لبنة ( إذا () وإلا ) ضمن لبنات الحركة.`, a: [`صح`, `خطأ`], c: 1 },
       { q: `إذا كان الشرط خطأ في لبنة (إذا () وإلا) يتم تنفيذ الشرط الموجود تحت (إذا (if)).`, a: [`صح`, `خطأ`], c: 1 },
       { q: `إذا كان الشرط صحيحا في لبنة (إذا () وإلا) يتم تنفيذ الشرط الموجود تحت (إلا (else)).`, a: [`صح`, `خطأ`], c: 1 },
@@ -2567,11 +2630,12 @@ function handleTimeUp() {
   }, 1600);
 }
 
+// تعديل الدالة ليتم حساب المحطة الآمنة بشكل منطقي: لن يحصل اللاعب على نقاط المحطة إلا إذا اجتازها (أجاب عليها صح)
 function calculateGuaranteedPrize() {
   let safe = "0";
   if (!currentMilestones || !currentPrizes) return safe;
   currentMilestones.forEach(m => {
-    if (curQIndex >= m && currentPrizes[m]) {
+    if (curQIndex > m) { 
       safe = currentPrizes[m];
     }
   });
@@ -2817,10 +2881,8 @@ function handleGameOver(won, prizePoints) {
   const isGirl = isFeminine(studentName);
   const bank = lessonBanks[currentLessonKey];
 
-  if (won) {
-    playFanfareSound();
-
-    // Register lesson completion in session list
+  // تسجيل الدرس في سجل الإنجازات إذا فاز اللاعب أو حصل على نقاط مضمونة من المحطات الآمنة
+  if (won || prizePoints !== "0") {
     const existingIdx = sessionCompletedLessons.findIndex(item => item.lessonKey === currentLessonKey);
     const entry = {
       lessonKey: currentLessonKey,
@@ -2833,12 +2895,21 @@ function handleGameOver(won, prizePoints) {
     };
 
     if (existingIdx >= 0) {
-      sessionCompletedLessons[existingIdx] = entry;
+      // تحديث السجل فقط إذا كانت النقاط الجديدة أعلى أو تساوي القديمة
+      const oldPts = parseInt(sessionCompletedLessons[existingIdx].points.replace(/,/g, ''));
+      const newPts = parseInt(prizePoints.replace(/,/g, ''));
+      if (newPts >= oldPts) {
+        sessionCompletedLessons[existingIdx] = entry;
+      }
     } else {
       sessionCompletedLessons.push(entry);
     }
     updatePrevCertBox();
     saveCurrentAppState();
+  }
+
+  if (won) {
+    playFanfareSound();
     
     // Add Next Stage button to the main screen UI below questions
     const nextStageContainer = $('nextStageContainer');
@@ -3033,7 +3104,7 @@ function preparePrintCertificate(studentName, studentClass, isGirl) {
   // --- بناء الصفحة الثانية وما بعدها: سجل الإنجازات ---
   let pagesHtml = '';
   const lessonsToRender = sessionCompletedLessons;
-  const CHUNK_SIZE = 12; // عدد ملائم جداً لصفحة A4
+  const CHUNK_SIZE = 12; // زيادة عدد الدروس في الصفحة لاستغلال المساحة المتاحة
   const chunks = [];
   
   for (let i = 0; i < lessonsToRender.length; i += CHUNK_SIZE) {
@@ -3059,8 +3130,8 @@ function preparePrintCertificate(studentName, studentClass, isGirl) {
           </div>
           
           <div class="cert-body" style="padding-top: 10px;">
-            <h2 class="cert-main-title" style="font-size: 22px; margin-bottom: 20px;">سِجِلُّ الإنجازاتِ المجتازةِ ${(chunks.length > 1 ? `(صفحة ${pageIndex + 1})` : '')}</h2>
-            <div style="font-size: 17px; font-weight: 700; color: #334155; margin-bottom: 12px;">اسم الطالب: ${safeStudentName}</div>
+            <h2 class="cert-main-title" style="font-size: 22px; margin-bottom: 20px; text-align: center;">سِجِلُّ الإنجازاتِ المجتازةِ ${(chunks.length > 1 ? `(صفحة ${pageIndex + 1})` : '')}</h2>
+            <div style="font-size: 17px; font-weight: 700; color: #334155; margin-bottom: 12px; text-align: center;">اسم الطالب: ${safeStudentName}</div>
             
             <table class="cert-lessons-table">
               <thead>
